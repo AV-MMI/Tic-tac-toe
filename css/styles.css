@@ -1,0 +1,53 @@
+/*UTILITIES*/
+
+@font-face {
+  font-family: "Roboto-regular";
+  src: url("../fonts/roboto/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-light";
+  src: url("../fonts/roboto/Roboto-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-thin";
+  src: url("../fonts/roboto/Roboto-Thin.ttf") format("truetype");
+}
+
+.horizontal-full-split {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  font-size: 20px;
+  font-family: "Roboto-light";
+  padding: 5px 20px;
+  background-color: #fff;
+  border: 2px solid #000;
+}
+
+.btn:hover {
+  border: 2px solid #9C19E0; /*Maybe*/
+}
+
+/*Nav*/
+/**Header**/
+h1,h2 {
+  margin: 0;
+}
+
+.title--cont {
+  width: 220px;
+  font-size: 26px;
+  border-bottom: 3px solid #000000;
+  border-right: 3px solid #000000;
+}
+
+/**How to play**/
+.how-to-play--cont {
+  margin-right: 10px;
+}
+
+

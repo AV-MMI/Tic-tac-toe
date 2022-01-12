@@ -1,5 +1,6 @@
-/*UTILITIES*/
 
+
+/*UTILITIES*/
 @font-face {
   font-family: "Roboto-regular";
   src: url("../fonts/roboto/Roboto-Regular.ttf") format("truetype");
@@ -20,16 +21,28 @@
   justify-content: space-between;
 }
 
+.horizontal-jointly-split {
+  display: flex;
+  flex-direction: row;
+}
+
 .btn {
   font-size: 20px;
   font-family: "Roboto-light";
+  font-weight: 700;
   padding: 5px 20px;
   background-color: #fff;
   border: 2px solid #000;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn:hover {
-  border: 2px solid #9C19E0; /*Maybe*/
+  background-color: #FEFFDE;
 }
 
 /*Nav*/
@@ -49,5 +62,32 @@ h1,h2 {
 .how-to-play--cont {
   margin-right: 10px;
 }
+
+/*Main*/
+.main--cont {
+  margin-top: 100px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/**History**/
+.history-head {
+  width: 200px;
+  height: 20px;
+}
+
+/**Gameboard**/
+.gameboard--cont {
+  margin-left: 200px;
+}
+
+.gameboard-users {
+  width: 500px;
+  height: 30px;
+  border: 2px solid #000000;
+}
+
+
+
 
 

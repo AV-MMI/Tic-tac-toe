@@ -1,4 +1,14 @@
+/* TO DO
+[X] Finish with the userbox
+  [] Fix the weird movement of the username text with the cursor animation.
+[] Start giving structure to the squares of the gameboard
+[] Finish the gameboard squares
+[] Start and finish the bottom part of the gameboard -- START/RESTART button
+[] Implement the A.I button and work in its mechanics.
+[] Finish the implementation of the history button and work in its mechanics.
+[] Finish the footer.
 
+*/
 
 /*UTILITIES*/
 @font-face {
@@ -26,6 +36,12 @@
   flex-direction: row;
 }
 
+.center-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .btn {
   font-size: 20px;
   font-family: "Roboto-light";
@@ -44,6 +60,8 @@
 .btn:hover {
   background-color: #FEFFDE;
 }
+
+
 
 /*Nav*/
 /**Header**/
@@ -87,7 +105,48 @@ h1,h2 {
   border: 2px solid #000000;
 }
 
+.user-box:nth-child(1){
+  width: 50%;
+  border-right: 1px solid #000000;
+}
 
+.user-box:nth-child(2){
+  width: 50%;
+  border-left: 1px solid #000000;
+}
 
+.username {
+  font-size: 21px;
+  padding-right: 6px;
+}
 
+.username:hover {
+  animation: cursor 2s infinite;
+}
 
+@keyframes cursor {
+  0% {
+    padding-right: 5px;
+    border-right: 1px solid #000000;
+  }
+
+  25% {
+    padding-right: 6px;
+    border-right: none;
+  }
+
+  50% {
+    padding-right: 5px;
+    border-right: 1px solid #000000;
+  }
+
+  75% {
+    padding-right: 6px;
+    border-right: none;
+  }
+
+  100% {
+    padding-right: 5px;
+    border-right: 1px solid #000000;
+  }
+}

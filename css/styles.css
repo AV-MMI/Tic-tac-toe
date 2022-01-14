@@ -1,9 +1,10 @@
-/* TO DO
+/*
+ TO DO
 [X] Finish with the userbox
-  [] Fix the weird movement of the username text with the cursor animation.
-[] Start giving structure to the squares of the gameboard
-[] Finish the gameboard squares
-[] Start and finish the bottom part of the gameboard -- START/RESTART button
+  [X] Fix the weird movement of the username text with the cursor animation.
+[X] Start giving structure to the squares of the gameboard
+[X] Finish the gameboard squares
+[X] Start and finish the bottom part of the gameboard -- START/RESTART button
 [] Implement the A.I button and work in its mechanics.
 [] Finish the implementation of the history button and work in its mechanics.
 [] Finish the footer.
@@ -58,7 +59,7 @@
 }
 
 .btn:hover {
-  background-color: #FEFFDE;
+  background-color: #faf5f1;
 }
 
 
@@ -99,6 +100,7 @@ h1,h2 {
   margin-left: 200px;
 }
 
+/***Gameboard users***/
 .gameboard-users {
   width: 500px;
   height: 30px;
@@ -117,7 +119,8 @@ h1,h2 {
 
 .username {
   font-size: 21px;
-  padding-right: 6px;
+  padding: 0px 5px;
+  border-right: 1px solid white;
 }
 
 .username:hover {
@@ -126,27 +129,72 @@ h1,h2 {
 
 @keyframes cursor {
   0% {
-    padding-right: 5px;
-    border-right: 1px solid #000000;
+    border-right: 1px solid #ffffff;
   }
 
   25% {
-    padding-right: 6px;
-    border-right: none;
+    border-right: 1px solid #000000;
   }
 
   50% {
-    padding-right: 5px;
-    border-right: 1px solid #000000;
+    border-right: 1px solid #ffffff;
   }
 
   75% {
-    padding-right: 6px;
-    border-right: none;
+    border-right: 1px solid #000000;
   }
 
   100% {
-    padding-right: 5px;
-    border-right: 1px solid #000000;
+    border-right: 1px solid #ffffff;
   }
+}
+
+/***Gameboard-board***/
+.gameboard-board {
+  background-color: #F7F7F7;
+  height: 400px;
+  border-left: 2px solid #000000;
+  border-right: 2px solid #000000;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.column {
+  width: 30%;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.square {
+  width: 100%;
+  height: 30%;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  transition: background-color .5s;
+}
+
+.square:hover{
+  background-color: #D3DEDC;
+}
+
+/***gameboard-bottom***/
+.gameboard-bottom {
+  background-color: red;
+  width: 100%;
+}
+
+.start-restart {
+  border-radius: 0px;
+  width: 100%;
+}
+
+/***gameboard-AI-btn***/
+.AI {
+  border-radius: 100%;
+  padding: 30px;
+  font-size: 31px;
 }

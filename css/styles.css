@@ -43,6 +43,12 @@
   align-items: center;
 }
 
+.vertical-center-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .btn {
   font-size: 20px;
   font-family: "Roboto-light";
@@ -93,8 +99,33 @@ h1,h2 {
 .history-head {
   width: 200px;
   height: 20px;
+  z-index: 1;
 }
 
+.test {
+  position: relative;
+  bottom: 30px;
+}
+
+.history-content {
+  width: 220px;
+  height: 10px;
+  background-color: #F7F7F7;
+  transition: height 2s;
+  border: 2px solid blue;
+}
+
+.history-content:hover{
+  height: 200px;
+  border: 2px solid red;
+}
+
+.history-bottom {
+  width: 230px;
+  height: 10px;
+  border:2px solid #000000;
+  border-radius: 10px;
+}
 /**Gameboard**/
 .gameboard--cont {
   margin-left: 200px;
@@ -158,6 +189,8 @@ h1,h2 {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  z-index: 3;
+  position: relative;
 }
 
 .column {
@@ -179,6 +212,7 @@ h1,h2 {
 
 .square:hover{
   background-color: #D3DEDC;
+  border: 2px solid red;
 }
 
 /***gameboard-bottom***/
@@ -193,8 +227,33 @@ h1,h2 {
 }
 
 /***gameboard-AI-btn***/
-.AI {
+.AI--cont {
+  position: relative;
+  left: 150px;
+  bottom: 340px;
+  transition: left 2s;
+  width: auto;
+}
+
+.AI--cont:hover {
+  left: 452px;
+}
+
+.AI-btn {
   border-radius: 100%;
-  padding: 30px;
   font-size: 31px;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  right: 40px;
+}
+
+.AI-menu {
+  width: 300px;
+  height: 200px;
+  border: 2px solid #000000;
+  background-color: #ffffff;
+  z-index: 1;
 }

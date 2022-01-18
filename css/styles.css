@@ -5,8 +5,8 @@
 [X] Start giving structure to the squares of the gameboard
 [X] Finish the gameboard squares
 [X] Start and finish the bottom part of the gameboard -- START/RESTART button
-[] Implement the A.I button and work in its mechanics.
-[] Finish the implementation of the history button and work in its mechanics.
+[X] Implement the A.I button and work in its mechanics.
+[-] Finish the implementation of the history button and work in its mechanics.
 [] Finish the footer.
 
 */
@@ -102,23 +102,43 @@ h1,h2 {
   z-index: 1;
 }
 
-.test {
-  position: relative;
-  bottom: 30px;
-}
-
 .history-content {
   width: 220px;
-  height: 10px;
+  height: 150px;
   background-color: #F7F7F7;
+  border: 2px solid #dedede;
   transition: height 2s;
-  border: 2px solid blue;
 }
 
 .history-content:hover{
   height: 200px;
   border: 2px solid red;
 }
+
+/***History Obj-items ***/
+.history-obj--cont {
+  margin-top: 5px;
+  background-color: #eaeaea;
+  border-top: 1px solid #c5c5c5;
+  border-bottom: 1px solid #c5c5c5;
+  text-align: center;
+}
+
+.history-remove-btn {
+  margin-right: 5px;
+  width: 25px;
+  height: 25px;
+  color: #FF0035;
+  cursor: pointer;
+}
+
+.history-remove-btn:hover {
+  background-color: #F6F8FF;
+  border: 1px solid #000000;
+  border-radius: 3px;
+}
+
+/***History bottom***/
 
 .history-bottom {
   width: 230px;
@@ -229,14 +249,14 @@ h1,h2 {
 /***gameboard-AI-btn***/
 .AI--cont {
   position: relative;
-  left: 150px;
+  left: 175px;
   bottom: 340px;
   transition: left 2s;
   width: auto;
 }
 
 .AI--cont:hover {
-  left: 452px;
+  left: 426px;
 }
 
 .AI-btn {
@@ -251,7 +271,7 @@ h1,h2 {
 }
 
 .AI-menu {
-  width: 300px;
+  width: 250px;
   height: 200px;
   border: 2px solid #000000;
   background-color: #ffffff;

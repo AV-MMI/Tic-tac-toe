@@ -6,7 +6,9 @@
 [X] Finish the gameboard squares
 [X] Start and finish the bottom part of the gameboard -- START/RESTART button
 [X] Implement the A.I button and work in its mechanics.
-[-] Finish the implementation of the history button and work in its mechanics.
+    [-] Define and design the options in the A.I Menu.
+[X] Finish the implementation of the history button and work in its mechanics.
+    [X] Adjust the colord of the remove btn
 [] Finish the footer.
 
 */
@@ -68,12 +70,15 @@
   background-color: #faf5f1;
 }
 
-
+button, span {
+  font-family: "Roboto-light";
+}
 
 /*Nav*/
 /**Header**/
 h1,h2 {
   margin: 0;
+  font-family: "Roboto-regular" ;
 }
 
 .title--cont {
@@ -108,11 +113,7 @@ h1,h2 {
   background-color: #F7F7F7;
   border: 2px solid #dedede;
   transition: height 2s;
-}
-
-.history-content:hover{
-  height: 200px;
-  border: 2px solid red;
+  overflow: auto;
 }
 
 /***History Obj-items ***/
@@ -122,19 +123,21 @@ h1,h2 {
   border-top: 1px solid #c5c5c5;
   border-bottom: 1px solid #c5c5c5;
   text-align: center;
+  padding: 5px 0px;
 }
 
 .history-remove-btn {
-  margin-right: 5px;
+  margin: 0px 5px;
   width: 25px;
   height: 25px;
   color: #FF0035;
   cursor: pointer;
+  border: 1px solid #55505C;
+  border-radius: 3px;
 }
 
 .history-remove-btn:hover {
   background-color: #F6F8FF;
-  border: 1px solid #000000;
   border-radius: 3px;
 }
 
@@ -228,6 +231,7 @@ h1,h2 {
   background-color: #ffffff;
   border: 1px solid #000000;
   transition: background-color .5s;
+  cursor: pointer;
 }
 
 .square:hover{
@@ -249,7 +253,7 @@ h1,h2 {
 /***gameboard-AI-btn***/
 .AI--cont {
   position: relative;
-  left: 175px;
+  left: 426px;
   bottom: 340px;
   transition: left 2s;
   width: auto;
@@ -276,4 +280,17 @@ h1,h2 {
   border: 2px solid #000000;
   background-color: #ffffff;
   z-index: 1;
+  display: flex;
+  justify-content: space-around;
+}
+
+.AI-menu-opt-btn {
+  font-size: 25px;
+}
+/*Footer*/
+
+
+.github-logo {
+  width: 100px;
+  background-color: black;
 }

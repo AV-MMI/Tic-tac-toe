@@ -1,17 +1,20 @@
-/*
- TO DO
-[X] Finish with the userbox
-  [X] Fix the weird movement of the username text with the cursor animation.
-[X] Start giving structure to the squares of the gameboard
-[X] Finish the gameboard squares
-[X] Start and finish the bottom part of the gameboard -- START/RESTART button
-[X] Implement the A.I button and work in its mechanics.
-    [-] Define and design the options in the A.I Menu.
-[X] Finish the implementation of the history button and work in its mechanics.
-    [X] Adjust the colord of the remove btn
-[] Finish the footer.
+/*TAGS*/
+body {
+  margin: 0;
+}
 
-*/
+h1,h2 {
+  margin: 0;
+  font-family: "Roboto-regular" ;
+}
+
+a:active {
+  color: #DFD3C3;
+}
+
+button, span {
+  font-family: "Roboto-light";
+}
 
 /*UTILITIES*/
 @font-face {
@@ -51,6 +54,10 @@
   align-items: center;
 }
 
+.link {
+  color: #F5F5F5;
+}
+
 .btn {
   font-size: 20px;
   font-family: "Roboto-light";
@@ -70,17 +77,12 @@
   background-color: #faf5f1;
 }
 
-button, span {
-  font-family: "Roboto-light";
-}
-
 /*Nav*/
-/**Header**/
-h1,h2 {
-  margin: 0;
-  font-family: "Roboto-regular" ;
-}
 
+.nav {
+  margin: 20px 10px
+}
+/**Header**/
 .title--cont {
   width: 220px;
   font-size: 26px;
@@ -107,9 +109,14 @@ h1,h2 {
   z-index: 1;
 }
 
+.history-fold {
+  position: relative;
+  bottom: 20px;
+}
+
 .history-content {
   width: 220px;
-  height: 150px;
+  height: 0px;
   background-color: #F7F7F7;
   border: 2px solid #dedede;
   transition: height 2s;
@@ -253,7 +260,7 @@ h1,h2 {
 /***gameboard-AI-btn***/
 .AI--cont {
   position: relative;
-  left: 426px;
+  left: 175px;
   bottom: 340px;
   transition: left 2s;
   width: auto;
@@ -286,9 +293,24 @@ h1,h2 {
 
 .AI-menu-opt-btn {
   font-size: 25px;
+  border: none;
+  border-bottom: 2px solid #fff;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border 0.5s;
+}
+
+.AI-menu-opt-btn:hover {
+  border-bottom: 2px solid #362222;
 }
 /*Footer*/
-
+.footer--cont {
+  padding: 0px 20px;
+  display: flex;
+  align-items: center;
+  background-color: black;
+  color: #fff;
+}
 
 .github-logo {
   width: 100px;

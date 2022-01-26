@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-	<nav id="nav" class="horizontal-full-split">
+	<nav id="nav" class="horizontal-full-split nav">
 		<header>
 			<div id="title--cont" class="title--cont">
 				<h1 class="header">Tic tac toe</h1>
@@ -25,15 +25,19 @@
 				<div id="history-head" class="history-head btn">
 					<span>HISTORY</span>
 				</div>
-				<div id="history-content" class="history-content">
-					<div id="h-obj-1" class="history-obj--cont horizontal-full-split center-child">
-						<span class="history-text">Jane Doe has win the game!</span>
-						<button type="button" class="history-remove-btn">X</button>
+
+				<div id="history-fold" class="history-fold">
+					<div id="history-content" class="history-content">
+						<div id="h-obj-1" class="history-obj--cont horizontal-full-split center-child">
+							<span class="history-text">Jane Doe has win the game!</span>
+							<button type="button" class="history-remove-btn">X</button>
+						</div>
+					</div>
+					<div id="history-bottom" class="history-bottom">
+
 					</div>
 				</div>
-				<div id="history-bottom" class="history-bottom">
 
-				</div>
 			</div>
 
 			<div id="gameboard--cont" class="gameboard--cont">
@@ -74,9 +78,12 @@
         </div>
 	</main>
 
-	<footer>
-		<div id="github-cont"><a href="#"><img src="./img/GitHub_Logo_White.png" alt="Github-link" class="github-logo"></a></div>
-		<div id="based-on--cont"></div>
+	<footer id="footer" class="footer">
+		<div id="footer--cont" class="footer--cont horizontal-full-split">
+			<div id="github--cont" class="github--cont"><a href="https://github.com/AV-MMI" target="_blank" class="center-child"><img src="./img/GitHub_Logo_White.png" alt="Github-link" class="github-logo"></a></div>
+			<div id="based-on--cont"><span>Based On: </span><a href="https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/tic-tac-toe" target="_blank" class="link">The Odin Project</a></div>
+
+		</div>
 	</footer>
 </body>
 <script type="text/javascript" href="./js/scripts.js"></script>

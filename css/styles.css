@@ -95,6 +95,36 @@ button, span {
   margin-right: 10px;
 }
 
+.floating-window-bg {
+  width: 1428px;
+  height: 839px;
+  background-color: gray;
+  position: absolute;
+  top: 0px;
+  left:0px;
+  z-index: 4;
+  opacity: 0.5;
+}
+
+.floating-window {
+  width: 480px;
+  height: 600px;
+  background-color: #FFF;
+  position: absolute;
+  right: 32.33%;
+  top: 10%;
+  z-index: 5;
+}
+
+.floating-window-content {
+  padding: 20px;
+}
+
+.floating-window-content h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 /*Main*/
 .main--cont {
   margin-top: 100px;
@@ -149,7 +179,6 @@ button, span {
 }
 
 /***History bottom***/
-
 .history-bottom {
   width: 230px;
   height: 10px;
@@ -266,9 +295,9 @@ button, span {
   width: auto;
 }
 
-.AI--cont:hover {
+/*.AI--cont:hover {
   left: 426px;
-}
+}*/
 
 .AI-btn {
   border-radius: 100%;

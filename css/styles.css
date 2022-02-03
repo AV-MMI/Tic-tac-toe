@@ -108,21 +108,37 @@ button, span {
 
 .floating-window {
   width: 480px;
-  height: 600px;
+  height: 350px;
   background-color: #FFF;
   position: absolute;
   right: 32.33%;
   top: 10%;
   z-index: 5;
+  overflow: hidden;
 }
 
 .floating-window-content {
   padding: 20px;
-}
+}amazon
 
 .floating-window-content h2 {
   text-align: center;
   margin-bottom: 20px;
+}
+
+.close-floating-window--btn {
+  position: relative;
+  left: 440px;
+  top: 10px;
+  background-color: #FFF;
+  border: 1px solid #000;
+  padding: 5px 10px;
+}
+
+.close-floating-window--btn:hover {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #fff;
 }
 
 /*Main*/

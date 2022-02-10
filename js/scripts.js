@@ -23,15 +23,7 @@ function currDate(){
 const howToPlayCont = document.querySelector("#how-to-play--cont");
 const howToPlayBtn = document.querySelector("#how-to-play--btn");
 
-			/*
-
-const floatingWindowBg = document.querySelector("#floating-window--bg");
-const floatingWindow = document.querySelector("#floating-window");
-const closeFloatingWindowBtn = document.querySelector("#close-floating-window--btn");
-
-closeFloatingWindowBtn.addEventListener("click", closeHTPBtn);
-*/
-
+howToPlayBtn.addEventListener("click", createFloatingWindow);
 
 	/*Histoy*/
 const historyFold = document.querySelector("#history-fold");
@@ -42,8 +34,12 @@ const historyContent = document.querySelector("#history-Content");
 function createFloatingWindow(){
 	const floatingWindowBg = document.createElement("div");
 	const floatingWindow = document.createElement("div");
+	// Goes inside the floatingWindow, before the floatingWindowContent.
 	const closeFloatingWindowBtn = document.createElement("button");
-	const floatingWindowContent = document.createElement("button");
+	// Goes inside the floatingWindow, after closeFloatingWindowBtn.
+	const floatingWindowContent = document.createElement("div");
+			//Content that goes inside our close button.
+	closeFloatingWindowBtn.textContent = "X";
 
 			//Tags and content that goes inside our floatingWindowContent
 	const floatingWindowContentHeader = document.createElement("h2");
@@ -67,17 +63,26 @@ function createFloatingWindow(){
 		//Assign each respective class to the elements it belongs
 	floatingWindowBg.classList.add("floating-window-bg");
 	floatingWindow.classList.add("floating-window");
-	floatingWindowContent.classList("floating-window-content");
+	closeFloatingWindowBtn.classList.add("close-floating-window--btn");
+	floatingWindowContent.classList.add("floating-window-content");
+	floatingWindowContentHeader.classList.add("floating-window-content--h2");
 
 	//Appending it to our HowToPlayCont
+	howToPlayCont.appendChild(floatingWindowBg);
+	howToPlayCont.appendChild(floatingWindow);
 
+	//Assigning eventListener to our close btn.
+	closeFloatingWindowBtn.addEventListener("click", closeHowToPlayBtn);
 }
-	/*
-function closeHTPBtn(e){
+
+function closeHowToPlayBtn(e){
+	const floatingWindowBg = document.querySelector(".floating-window-bg");
+	const floatingWindow = document.querySelector(".floating-window");
+
 	howToPlayCont.removeChild(floatingWindowBg);
 	howToPlayCont.removeChild(floatingWindow);
 }
-*/
+
 	/*History*/
 function pushDataToHistoryObj(){
 	let historyData = {

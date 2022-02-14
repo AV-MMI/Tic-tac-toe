@@ -5,15 +5,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Tic tac toe</title>
 	<link rel="stylesheet" href="./css/styles.css">
+	<script type="text/javascript" src="./js/scripts.js" defer></script>
 </head>
 <body>
+	<button id="test">testing</button>
+	<button id="log">log</button>
 	<nav id="nav" class="horizontal-full-split nav">
 		<header>
 			<div id="title--cont" class="title--cont">
 				<h1 class="header">Tic tac toe</h1>
 			</div>
 		</header>
-
 		<div id="how-to-play--cont" class="how-to-play--cont">
 			<button type="button" id="how-to-play--btn" class="btn">How to play?</button>
 		</div>
@@ -22,16 +24,15 @@
 	<main>
 		<div id="main--cont" class="main--cont horizontal-jointly-split">
 			<div id="history--cont" class="history--cont vertical-center-child">
-				<div id="history-head" class="history-head btn">
+				<button id="history-btn" class="history-btn btn">
 					<span>HISTORY</span>
-				</div>
+				</button>
 
-				<div id="history-fold" class="history-fold">
+				<div id="history-content--cont" class="history-content--cont">
 					<div id="history-content" class="history-content">
-						<div id="h-obj-1" class="history-obj--cont horizontal-full-split center-child">
-							<span class="history-text">Jane Doe has win the game!</span>
-							<button type="button" class="history-remove-btn">X</button>
-						</div>
+						<ul id="ul-history-content">
+							
+						</ul>
 					</div>
 					<div id="history-bottom" class="history-bottom">
 
@@ -86,5 +87,4 @@
 		</div>
 	</footer>
 </body>
-<script type="text/javascript" href="./js/scripts.js"></script>
 </html>

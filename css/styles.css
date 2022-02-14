@@ -16,6 +16,24 @@ button, span {
   font-family: "Roboto-light";
 }
 
+ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+li {
+  margin-top: 10px;
+}
+
+li:first-child {
+  margin-top: 30px;
+}
+
+.item-date {
+  font-size: 10px;
+  color: red;
+}
+
 /*UTILITIES*/
 @font-face {
   font-family: "Roboto-regular";
@@ -150,28 +168,35 @@ button, span {
 }
 
 /**History**/
-.history-head {
-  width: 200px;
-  height: 20px;
+.history-btn {
+  width: 240px;
+  height: 40px;
   z-index: 1;
 }
 
-.history-fold {
+.history-content--cont {
   position: relative;
   bottom: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .history-content {
   width: 220px;
-  height: 0px;
+  height: 200px;
   background-color: #F7F7F7;
   border: 2px solid #dedede;
   transition: height 2s;
   overflow: auto;
 }
 
+.history-expand-content {
+  height: 200px;
+}
+
 /***History Obj-items ***/
-.history-obj--cont {
+.history-content--item {
   margin-top: 5px;
   background-color: #eaeaea;
   border-top: 1px solid #c5c5c5;

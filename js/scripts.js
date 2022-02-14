@@ -2,17 +2,20 @@
 	/*How to Play button*/
 
 	/*History*/
-const historyObj = {}
+const historyObj = {
+
+}
 let dataId = 0;
 
 function currDate(){
 	const date = new Date();
-	const currDay = "0" + date.getDate();
-	const currMonth = "0" + (date.getMonth() + 1);
-	const currYear = date.getFullYear();
-	const second = date.getSeconds();
+	const currDay = (String(date.getDate()).length == 1) ? ("0" + date.getDate()) : (date.getDate());
+	const currMonth = (String(date.getMonth()).length == 1) ? ("0" + date.getMonth()) : (date.getMonth());
+	const currFullYear = date.getFullYear();
+	const currTwoDigYear = String(currFullYear)[2] + String(currFullYear)[3];
 
-	const dateFormat = `${currDay} /- ${currMonth} /- ${currYear}`
+
+	const dateFormat = `${currDay} - ${currMonth} - ${currTwoDigYear}`
 
 	return dateFormat;
 };
@@ -26,8 +29,11 @@ const howToPlayBtn = document.querySelector("#how-to-play--btn");
 howToPlayBtn.addEventListener("click", createFloatingWindow);
 
 	/*Histoy*/
-const historyFold = document.querySelector("#history-fold");
-const historyContent = document.querySelector("#history-Content");
+const historyBtn = document.querySelector("#history-btn");
+const historyContent = document.querySelector("#history-content");
+const ulHistoryContent = document.querySelector("#ul-history-content");
+
+historyBtn.addEventListener("click", expandHistoryContent);
 
 /*EVENT HANDLERS FUNCTIONS*/
 	/*How to Play button*/
@@ -88,13 +94,76 @@ function pushDataToHistoryObj(){
 	let historyData = {
 		date: currDate(),
 		name: "Jane Doe",
+		id: dataId,
 	};
 
 	historyObj[dataId] = historyData;
 	dataId++;
 }
+console.log(historyObj)
+pushDataToHistoryObj();
+pushDataToHistoryObj();
+pushDataToHistoryObj();
+pushDataToHistoryObj();
+console.log(historyObj)
 
-function log(e){
-	e.target.style.border = "1px dotted red";
-	console.log(historyObj);
+function expandHistoryContent(){
+	historyContent.classList.toggle("history-expand-content")
 }
+
+function createHistoryItems(data, idx, parent){
+	//Creating each element.
+	const liCont = document.createElement("li");
+	const divCont = document.createElement("div");
+	const winnerSpan = document.createElement("span");
+	const dateSpan = document.createElement("span");
+	const removeBtn = document.createElement("button")
+
+	//assigning the respective data and classes for each element.
+	divCont.id = data[idx]["id"];
+	divCont.classList.add("history-content--item");
+
+	winnerSpan.textContent = data[idx]["name"];
+	winnerSpan.classList.add("item-winner");
+
+	dateSpan.textContent = data[idx]["date"];
+	dateSpan.classList.add("item-date");
+
+	removeBtn.textContent = "X";
+	removeBtn.classList.add("history-remove-btn");
+
+	//adding the eventListener to removeBtn.
+	removeBtn.addEventListener("click", removeHistoryItem)
+
+	//Appendind each element in its respective order.
+	divCont.appendChild(winnerSpan);
+	divCont.appendChild(dateSpan);
+	divCont.appendChild(removeBtn);
+
+	liCont.appendChild(divCont);
+	parent.appendChild(liCont);
+}
+
+function removeHistoryItem(e){
+	const divCont = e.target.parentElement;
+	const liCont = divCont.parentElement;
+	const itemId = divCont.id;
+
+	delete historyObj[itemId];
+	ulHistoryContent.removeChild(liCont);
+}
+
+function displayHistoryItems(){
+	let counter = 0
+	while(counter < Object.keys(historyObj).length){
+		if(historyObj[counter]){
+			createHistoryItems(historyObj, counter, ulHistoryContent);
+			counter++;
+		}
+		else {
+			counter++;
+		}
+	}
+}
+
+displayHistoryItems();

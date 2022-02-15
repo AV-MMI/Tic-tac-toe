@@ -235,7 +235,7 @@ li:first-child {
 /***Gameboard users***/
 .gameboard-users {
   width: 500px;
-  height: 30px;
+  height: 50px;
   border: 2px solid #000000;
 }
 
@@ -253,6 +253,13 @@ li:first-child {
   font-size: 21px;
   padding: 0px 5px;
   border-right: 1px solid white;
+  cursor: pointer;
+  color = black;
+  transition: color 0.5s;
+}
+
+.username:active{
+  color: red;
 }
 
 .username:hover {

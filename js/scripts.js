@@ -1,4 +1,4 @@
-/*LOCAL VARIABLES AND FUNCTIONS*/
+/*----LOCAL VARIABLES AND FUNCTIONS----*/
 	/*How to Play button*/
 
 	/*History*/
@@ -20,7 +20,7 @@ function currDate(){
 	return dateFormat;
 };
 
-/*DOOM VARIABLES AND EVENT HANDLERS*/
+/*----DOOM VARIABLES AND EVENT HANDLERS----*/
 
 	/*How to Play button*/
 const howToPlayCont = document.querySelector("#how-to-play--cont");
@@ -35,7 +35,10 @@ const ulHistoryContent = document.querySelector("#ul-history-content");
 
 historyBtn.addEventListener("click", expandHistoryContent);
 
-/*EVENT HANDLERS FUNCTIONS*/
+	/*Changing username*/
+
+
+/*----EVENT HANDLERS FUNCTIONS----*/
 	/*How to Play button*/
 function createFloatingWindow(){
 	const floatingWindowBg = document.createElement("div");
@@ -100,12 +103,15 @@ function pushDataToHistoryObj(){
 	historyObj[dataId] = historyData;
 	dataId++;
 }
+
+/*V________TESTING_________V*/
 console.log(historyObj)
 pushDataToHistoryObj();
 pushDataToHistoryObj();
 pushDataToHistoryObj();
 pushDataToHistoryObj();
 console.log(historyObj)
+/*^________TESTING_________^*/
 
 function expandHistoryContent(){
 	historyContent.classList.toggle("history-expand-content")
@@ -149,8 +155,16 @@ function removeHistoryItem(e){
 	const liCont = divCont.parentElement;
 	const itemId = divCont.id;
 
+	let fInterval;
+	let cancelInterval;
+	fInterval = setInterval(deletingFromTheDOM, 100);
 	delete historyObj[itemId];
-	ulHistoryContent.removeChild(liCont);
+
+	function deletingFromTheDOM(){
+		ulHistoryContent.removeChild(liCont)
+		clearInterval(fInterval);
+	}
+
 }
 
 function displayHistoryItems(){
@@ -166,4 +180,7 @@ function displayHistoryItems(){
 	}
 }
 
+	/*Changing username*/
+
+//Calling functions
 displayHistoryItems();

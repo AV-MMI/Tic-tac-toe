@@ -239,10 +239,12 @@ input {
 }
 
 /***Gameboard users***/
-.gameboard-users {
+.gameboard-users-display {
   width: 500px;
   height: 50px;
   border: 2px solid #000000;
+  background-color: #FFF;
+
 }
 
 .input-box {
@@ -250,16 +252,27 @@ input {
   border: 1px #F9DEC9  solid;
   height: 40px;
   width: 200px;
+  position: relative;
+  top: 45px;
+  z-index: 1;
+  transition: top 2s;
 }
 
 .input-box:nth-child(1){
   border-top-right-radius: 10px;
   border-top-left-radius: 5px;
+  left: 10px;
 }
 
 .input-box:nth-child(2){
   border-top-right-radius: 5px;
   border-top-left-radius: 10px;
+  right: 10px;
+}
+
+.user-box {
+  background-color: #fff;
+  z-index: 2;
 }
 
 .user-box:nth-child(1){
@@ -272,7 +285,7 @@ input {
   border-left: 1px solid #000000;
 }
 
-.username {
+.user-display {
   font-size: 21px;
   padding: 0px 5px;
   border-right: 1px solid white;
@@ -281,11 +294,11 @@ input {
   transition: color 0.5s;
 }
 
-.username:active{
+.user-display:active{
   color: red;
 }
 
-.username:hover {
+.user-display:hover {
   animation: cursor 2s infinite;
 }
 
@@ -320,8 +333,8 @@ input {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  z-index: 3;
   position: relative;
+  z-index: 3;
 }
 
 .column {

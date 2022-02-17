@@ -35,7 +35,12 @@ const ulHistoryContent = document.querySelector("#ul-history-content");
 
 historyBtn.addEventListener("click", expandHistoryContent);
 
-	/*Changing username*/
+	/*Gameboard*/
+		/**Gameboard users**/
+const inputBox = document.querySelectorAll(".input-box");
+const userDisplay = document.querySelectorAll(".user-display");
+
+userDisplay.forEach(Display => Display.addEventListener("click", ))
 
 
 /*----EVENT HANDLERS FUNCTIONS----*/
@@ -181,6 +186,10 @@ function displayHistoryItems(){
 }
 
 	/*Changing username*/
+function showInput(e){
+	console.log(e.target.id[e.target.id.length-1])
+}
+
 
 //Calling functions
 displayHistoryItems();

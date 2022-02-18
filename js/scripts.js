@@ -40,8 +40,8 @@ historyBtn.addEventListener("click", expandHistoryContent);
 const inputBox = document.querySelectorAll(".input-box");
 const userDisplay = document.querySelectorAll(".user-display");
 
-userDisplay.forEach(Display => Display.addEventListener("click", ))
-
+userDisplay.forEach(display => display.addEventListener("click", changeInputTop));
+inputBox.forEach(input => input.addEventListener("input", updateUsername));
 
 /*----EVENT HANDLERS FUNCTIONS----*/
 	/*How to Play button*/
@@ -120,7 +120,7 @@ console.log(historyObj)
 
 function expandHistoryContent(){
 	historyContent.classList.toggle("history-expand-content")
-}
+};
 
 function createHistoryItems(data, idx, parent){
 	//Creating each element.
@@ -153,7 +153,7 @@ function createHistoryItems(data, idx, parent){
 
 	liCont.appendChild(divCont);
 	parent.appendChild(liCont);
-}
+};
 
 function removeHistoryItem(e){
 	const divCont = e.target.parentElement;
@@ -169,8 +169,7 @@ function removeHistoryItem(e){
 		ulHistoryContent.removeChild(liCont)
 		clearInterval(fInterval);
 	}
-
-}
+};
 
 function displayHistoryItems(){
 	let counter = 0
@@ -183,12 +182,32 @@ function displayHistoryItems(){
 			counter++;
 		}
 	}
-}
+};
 
 	/*Changing username*/
-function showInput(e){
-	console.log(e.target.id[e.target.id.length-1])
+function changeInputTop(e){
+	function obtainInput(e){
+		for(let i = 0; i < inputBox.length; i++){
+			if(inputBox[i].id[inputBox[i].id.length - 1] == displayN){
+				return inputBox[i];
+			}
+		}
+	};
+
+	const displayN = e.target.id[e.target.id.length - 1];
+	const inputDiv = obtainInput(e);
+
+	inputDiv.classList.toggle("input-box--open")
 }
+//////----------Working on this------->
+function updateUsername(e){
+	function obtainDisplay(e){
+
+	}
+
+	const inputN = e.target.id[.e.target.id.length - 1];
+}
+//////----------Working on this-------<
 
 
 //Calling functions

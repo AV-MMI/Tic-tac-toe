@@ -255,7 +255,11 @@ input {
   position: relative;
   top: 45px;
   z-index: 1;
-  transition: top 2s;
+  transition: top 1s;
+}
+
+.input-box--open{
+  top: 0px;
 }
 
 .input-box:nth-child(1){
@@ -271,6 +275,8 @@ input {
 }
 
 .user-box {
+  position: relative;
+  border-top: 1px solid black;
   background-color: #fff;
   z-index: 2;
 }

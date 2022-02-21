@@ -40,8 +40,7 @@ historyBtn.addEventListener("click", expandHistoryContent);
 const inputBox = document.querySelectorAll(".input-box");
 const userDisplay = document.querySelectorAll(".user-display");
 
-userDisplay.forEach(display => display.addEventListener("click", changeInputTop));
-inputBox.forEach(input => input.addEventListener("input", updateUsername));
+userDisplay.forEach(display => display.addEventListener("click", openCloseInputDiv));
 
 /*----EVENT HANDLERS FUNCTIONS----*/
 	/*How to Play button*/
@@ -185,27 +184,57 @@ function displayHistoryItems(){
 };
 
 	/*Changing username*/
-function changeInputTop(e){
+function openCloseInputDiv(e){
+	const displayN = e.target.id[e.target.id.length - 1];
+
 	function obtainInput(e){
 		for(let i = 0; i < inputBox.length; i++){
-			if(inputBox[i].id[inputBox[i].id.length - 1] == displayN){
+			if(inputBox[i].id[ inputBox[i].id.length - 1 ] == displayN){
 				return inputBox[i];
 			}
 		}
 	};
 
-	const displayN = e.target.id[e.target.id.length - 1];
-	const inputDiv = obtainInput(e);
+	function autofocus(){
+		if(inputDiv.classList.contains("input-box--open")){
+			inputDiv.children[0].focus();
+		}
+	}
 
-	inputDiv.classList.toggle("input-box--open")
-}
-//////----------Working on this------->
-function updateUsername(e){
-	function obtainDisplay(e){
+	function enterKeyToClose(){
+		const lambda = (e) => {
+			if(e.code == "Enter"){
+				if(inputDiv.classList.contains("input-box--open")){
+					inputDiv.classList.toggle("input-box--open");
+				}
+			}
+		}
+
+		document.addEventListener("keypress", lambda);
 
 	}
 
-	const inputN = e.target.id[.e.target.id.length - 1];
+	const inputDiv = obtainInput(e);
+
+	inputDiv.classList.toggle("input-box--open");
+	autofocus();
+	enterKeyToClose();
+}
+//////----------Working on this------->
+function updateUsername(e){
+	const inputEl = e.target;
+	const inputN = inputEl.id[inputEl.id.length - 1];
+
+	function obtainDisplay(e){
+		for(let i = 0; i < userDisplay.length; i++){
+			if(userDisplay[i].id[ userDisplay[i].id.length - 1 ] == inputN)
+				return userDisplay[i];
+		}
+	}
+
+	const displaySpan = obtainDisplay(e);
+
+	displaySpan.textContent = inputEl.value;
 }
 //////----------Working on this-------<
 

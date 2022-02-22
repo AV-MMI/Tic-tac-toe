@@ -41,6 +41,7 @@ const inputBox = document.querySelectorAll(".input-box");
 const userDisplay = document.querySelectorAll(".user-display");
 
 userDisplay.forEach(display => display.addEventListener("click", openCloseInputDiv));
+inputBox.forEach(input => input.addEventListener("input", updateUsername));
 
 /*----EVENT HANDLERS FUNCTIONS----*/
 	/*How to Play button*/
@@ -202,15 +203,16 @@ function openCloseInputDiv(e){
 	}
 
 	function enterKeyToClose(){
-		const lambda = (e) => {
+		const checkKey = (e) => {
 			if(e.code == "Enter"){
 				if(inputDiv.classList.contains("input-box--open")){
 					inputDiv.classList.toggle("input-box--open");
+					inputDiv.children[0].blur();
 				}
 			}
 		}
 
-		document.addEventListener("keypress", lambda);
+		document.addEventListener("keypress", checkKey);
 
 	}
 

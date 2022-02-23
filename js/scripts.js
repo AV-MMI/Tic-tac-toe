@@ -204,7 +204,8 @@ function openCloseInputDiv(e){
 
 	function enterKeyToClose(){
 		const checkKey = (e) => {
-			if(e.code == "Enter"){
+			console.log(e.code)
+			if(e.code == "Enter" || e.code == "NumpadEnter"){
 				if(inputDiv.classList.contains("input-box--open")){
 					inputDiv.classList.toggle("input-box--open");
 					inputDiv.children[0].blur();

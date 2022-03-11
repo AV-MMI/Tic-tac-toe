@@ -185,7 +185,7 @@ input {
 
 .history-content {
   width: 220px;
-  height: 200px;
+  height: 0px;
   background-color: #F7F7F7;
   border: 2px solid #dedede;
   transition: height 2s;

@@ -21,11 +21,17 @@ function currDate(){
 };
 
 /*----EVENT HANDLERS FUNCTIONS----*/
-// TODO: Comment all function saying what does each one.
+
 const DOMFuncs = (function(){
 
 	//Public Methods and Variables.
 		/*How to Play button*/
+
+			/**
+			* Create a floating window when the how-to-play--btn is clicked,
+			* along with a background "window" of gray color with an opacity
+			* of 0.8
+			**/
 	function createFloatingWindow(){
 		const floatingWindowBg = document.createElement("div");
 		const floatingWindow = document.createElement("div");
@@ -69,7 +75,12 @@ const DOMFuncs = (function(){
 		//Assigning eventListener to our close btn.
 		closeFloatingWindowBtn.addEventListener("click", closeHowToPlayBtn);
 	};
-
+			/**
+			* Function in charge of closing the floating window once the user
+			* press the closeFloatingWindowBtn. This button is created
+			* through our createFloatingWindow, and its styles along with
+			* its event listener are added in the process of its creation.
+			**/
 	function closeHowToPlayBtn(e){
 		const floatingWindowBg = document.querySelector(".floating-window-bg");
 		const floatingWindow = document.querySelector(".floating-window");
@@ -100,6 +111,19 @@ const DOMFuncs = (function(){
 			//users:
 	const _inputBox = document.querySelectorAll(".input-box");
 
+				/**
+				* It toggles the css class input-box--open to open or close
+				* the _inputBox that we have clicked. It has three inner functions:
+				*
+				* _obtainInput(e) return the _inputBox element that was clicked.
+				*
+				* _autofocus() makes sure that when the _inputDiv element is "open"
+				* the input tag inside is focused automatically.
+				*
+				* _enterKeyToClose() makes sure to close the _inputDiv that is open when the
+				* Enter key or the Numpad Enter key are pressed. If both _inputDiv
+				* are open, then it closes both of them.
+				**/
 	function openCloseInputDiv(e){
 		const displayN = e.target.id[e.target.id.length - 1];
 		const _inputDiv = _obtainInput();
@@ -138,6 +162,8 @@ const DOMFuncs = (function(){
 	};
 
 	_inputBox.forEach(input => input.addEventListener("input", _updateUsername));
+
+
 
 	//Private Methods and Variables.
 		/*History*/
@@ -205,19 +231,19 @@ const DOMFuncs = (function(){
 		/*Gameboard*/
 			//users:
 	function _updateUsername(e){
-		const inputEl = e.target;
-		const inputN = inputEl.id[inputEl.id.length - 1];
+		const _inputEl = e.target;
+		const _inputN = _inputEl.id[_inputEl.id.length - 1];
 
-		function obtainDisplay(e){
+		function _obtainDisplay(e){
 			for(let i = 0; i < userDisplay.length; i++){
-				if(userDisplay[i].id[ userDisplay[i].id.length - 1 ] == inputN)
+				if(userDisplay[i].id[ userDisplay[i].id.length - 1 ] == _inputN)
 					return userDisplay[i];
 			}
 		}
 
-		const displaySpan = obtainDisplay(e);
+		const _displaySpan = _obtainDisplay(e);
 
-		displaySpan.textContent = inputEl.value;
+		_displaySpan.textContent = _inputEl.value;
 	};
 
 	return {

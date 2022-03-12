@@ -1,23 +1,27 @@
 /*----LOCAL VARIABLES AND FUNCTIONS----*/
-	/*How to Play button*/
+const gameFlow = {
+	players: {},
+	history: {},
+};
 
-	/*History*/
-const historyObj = {
-
-}
-let dataId = 0;
-
-function currDate(){
-	const date = new Date();
-	const currDay = (String(date.getDate()).length == 1) ? ("0" + date.getDate()) : (date.getDate());
-	const currMonth = (String(date.getMonth()).length == 1) ? ("0" + date.getMonth()) : (date.getMonth());
-	const currFullYear = date.getFullYear();
-	const currTwoDigYear = String(currFullYear)[2] + String(currFullYear)[3];
+const local = {
+	utils: {
+		history: {
+			dataId: 0,
+			currDate: function(){
+				const date = new Date();
+				const currDay = (String(date.getDate()).length == 1) ? ("0" + date.getDate()) : (date.getDate());
+				const currMonth = (String(date.getMonth()).length == 1) ? ("0" + date.getMonth()) : (date.getMonth());
+				const currFullYear = date.getFullYear();
+				const currTwoDigYear = String(currFullYear)[2] + String(currFullYear)[3];
 
 
-	const dateFormat = `${currDay} - ${currMonth} - ${currTwoDigYear}`
+				const dateFormat = `${currDay} - ${currMonth} - ${currTwoDigYear}`
 
-	return dateFormat;
+				return dateFormat;
+			},
+		},
+	},
 };
 
 /*----EVENT HANDLERS FUNCTIONS----*/
@@ -96,9 +100,9 @@ const DOMFuncs = (function(){
 
 	function displayHistoryItems(){
 		let counter = 0
-		while(counter < Object.keys(historyObj).length){
-			if(historyObj[counter]){
-				_createHistoryItems(historyObj, counter, ulHistoryContent);
+		while(counter < Object.keys(gameFlow.history).length){
+			if(gameFlow.history[counter]){
+				_createHistoryItems(gameFlow.history, counter, ulHistoryContent);
 				counter++;
 			}
 			else {
@@ -169,13 +173,13 @@ const DOMFuncs = (function(){
 		/*History*/
 	function _pushDataToHistoryObj(historyData){
 		historyData = {
-			date: currDate(),
+			date: local.utils.history.currDate(),
 			name: "Jane Doe",
-			id: dataId,
+			id: local.utils.history.dataId,
 		};
 
-		historyObj[dataId] = historyData;
-		dataId++;
+		gameFlow.history[local.utils.history.dataId] = historyData;
+		local.utils.history.dataId++;
 	};
 
 	function _removeHistoryItem(e){
@@ -185,10 +189,10 @@ const DOMFuncs = (function(){
 
 		let fInterval;
 		let cancelInterval;
-		fInterval = setInterval(deletingFromTheDOM, 100);
-		delete historyObj[itemId];
+		fInterval = setInterval(_deletingFromTheDOM, 100);
+		delete gameFlow.history[itemId];
 
-		function deletingFromTheDOM(){
+		function _deletingFromTheDOM(){
 			ulHistoryContent.removeChild(liCont)
 			clearInterval(fInterval);
 		}
@@ -263,12 +267,12 @@ const DOMFuncs = (function(){
 
 
 /*V________TESTING_________V*/
-console.log(historyObj)
+console.log(gameFlow.history)
 DOMFuncs._pushDataToHistoryObj();
 DOMFuncs._pushDataToHistoryObj();
 DOMFuncs._pushDataToHistoryObj();
 DOMFuncs._pushDataToHistoryObj();
-console.log(historyObj)
+console.log(gameFlow.history)
 /*^________TESTING_________^*/
 
 	/*Changing username*/

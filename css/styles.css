@@ -367,6 +367,11 @@ input {
   border: 2px solid red;
 }
 
+.span-mark {
+  color: #534340;
+  font-size: 50px;
+}
+
 /***gameboard-bottom***/
 .gameboard-bottom {
   background-color: red;

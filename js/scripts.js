@@ -2,9 +2,9 @@
 const gameFlow = {
 	history: {},
 	players: {},
-	board: {0: "X", 3: "X", 6: "O",
-			1: "O", 4: "O", 7: "X",
-			2: "X", 5: "O", 8: "X",},
+	board: {0: "", 3: "", 6: "",
+			1: "", 4: "", 7: "",
+			2: "", 5: "", 8: "",},
 };
 
 const local = {
@@ -41,6 +41,12 @@ const local = {
 /*----EVENT HANDLERS FUNCTIONS----*/
 
 const DOMFuncs = (function(){
+	//---Public variables---.
+		//Gameboard
+			//users
+	const usersDisplay = document.querySelectorAll(".user-display");
+			//board
+	const squares = document.querySelectorAll(".square");
 
 	//---Private Methods and Variables---.
 		/*History*/
@@ -106,15 +112,15 @@ const DOMFuncs = (function(){
 	};
 
 		/*Gameboard*/
-			//users:
+			//Users:
 	function _updateUsername(e){
 		const _inputEl = e.target;
 		const _inputN = _inputEl.id[_inputEl.id.length - 1];
 
 		function _obtainDisplay(e){
-			for(let i = 0; i < userDisplay.length; i++){
-				if(userDisplay[i].id[ userDisplay[i].id.length - 1 ] == _inputN)
-					return userDisplay[i];
+			for(let i = 0; i < usersDisplay.length; i++){
+				if(usersDisplay[i].id[ usersDisplay[i].id.length - 1 ] == _inputN)
+					return usersDisplay[i];
 			}
 		}
 
@@ -126,6 +132,28 @@ const DOMFuncs = (function(){
 	const _inputBox = document.querySelectorAll(".input-box");
 	_inputBox.forEach(input => input.addEventListener("input", _updateUsername));
 
+
+	function _highlightPlayerTurn(obj){
+		if(obj.leftPlayer.turn){
+			for(let i = 0; i < usersDisplay.length; i++){
+				if(usersDisplay[i].id[ usersDisplay[i].id.length - 1] == obj.leftPlayer.container){
+					usersDisplay[i].parentElement.style.border = "2px solid #00FFDD";
+					usersDisplay[ obj.rightPlayer.container ].parentElement.style.border = "1px solid #000";
+				}
+			}
+		} else {
+
+			for(let i = 0; i < usersDisplay.length; i++){
+				if(usersDisplay[i].id[ usersDisplay[i].id.length - 1] == obj.rightPlayer.container){
+					usersDisplay[i].parentElement.style.border = "1px solid #00FFDD";
+					usersDisplay[ obj.leftPlayer.container ].parentElement.style.border = "1px solid #000";
+				}
+			}
+
+		}
+	}
+
+		//Board:
 			/**
 			* assign the initial turn to one of the players in an
 			* random way.
@@ -136,8 +164,6 @@ const DOMFuncs = (function(){
 			return Math.floor(Math.random() * max);
 		};
 
-		console.log(obj);
-
 		const randomNum = _generateRandomNum(2);
 
 		if(randomNum == 1){
@@ -146,7 +172,61 @@ const DOMFuncs = (function(){
 			obj.rightPlayer.turn = true;
 		};
 	};
+			/**
+			* Check the gameboard looking for winning moves, if there is any
+			* it will display a message for the winner in the div gameboard-bottom.
+			* It will check for three different patterns: Vertical, Horizontal, and Diagonal
+			* moves. It also will be invoked every time a player makes a move.
+			**/
 
+			// TODO: Change the board-bottom to make a display for the winner.
+	function _checkGame(obj){
+		let winner;
+
+		//Vertical.
+		if(obj["0"] !== "" && obj["0"] == obj["1"] && obj["1"] == obj["2"]){
+			winner = (gameFlow.players.leftPlayer.mark == obj["0"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
+			console.log(winner);
+		}
+
+		else if(obj["3"] !== "" && obj["3"] == obj["4"] && obj["4"] == obj["5"]){
+			winner = (gameFlow.players.leftPlayer.mark == obj["3"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
+			console.log(winner);
+		}
+
+		else if(obj["6"] !== "" && obj["6"] == obj["7"] && obj["7"] == obj["8"]){
+			winner = (gameFlow.players.leftPlayer.mark == obj["6"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
+			console.log(winner);
+		}
+
+		//Horizontal.
+		else if(obj["0"] !== "" && obj["0"] == obj["3"] && obj["3"] == obj["6"]){
+			winner = (gameFlow.players.leftPlayer.mark == obj["0"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
+			console.log(winner);
+		}
+
+		else if(obj["1"] !== "" && obj["1"] == obj["4"] && obj["4"] == obj["7"]){
+			winner = (gameFlow.players.leftPlayer.mark == obj["1"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
+			console.log(winner);
+		}
+
+		else if(obj["2"] !== "" && obj["2"] == obj["5"] && obj["5"] == obj["8"]){
+			winner = (gameFlow.players.leftPlayer.mark == obj["2"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
+			console.log(winner);
+		}
+
+		//Diagonal.
+		else if(obj["0"] !== "" && obj["0"] == obj["4"] && obj["4"] == obj["8"]){
+			winner = (gameFlow.players.leftPlayer.mark == obj["0"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
+			console.log(winner);
+		}
+
+		else if(obj["2"] !== "" && obj["2"] == obj["4"] && obj["4"] == obj["6"]){
+			winner = (gameFlow.players.leftPlayer.mark == obj["2"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
+			console.log(winner);
+		}
+
+	};
 
 	//---Public Methods and Variables---.
 		/*How to Play button*/
@@ -291,8 +371,6 @@ const DOMFuncs = (function(){
 				* inside the span tags with the id of each square.
 				**/
 
-	const squares = document.querySelectorAll(".square");
-
 	function displayBoard(obj){
 		for(square in obj){
 			let _span =  squares[square].firstChild;
@@ -315,6 +393,7 @@ const DOMFuncs = (function(){
 			gameFlow.players["rightPlayer"] = rightPlayer;
 
 			_assignRandomTurn(gameFlow.players);
+			_highlightPlayerTurn(gameFlow.players);
 		}
 	}
 
@@ -335,7 +414,6 @@ const DOMFuncs = (function(){
 		}
 
 		function currentMark(obj){
-			console.log(obj)
 			if(obj.leftPlayer.turn){
 				return obj.leftPlayer.mark;
 			} else {
@@ -343,21 +421,32 @@ const DOMFuncs = (function(){
 			}
 		};
 
-
-							//ID of square pressed,				Div or Span pressed?
+							//ID of square pressed,			Div/Span pressed?
 		let squareData = [e.target.id[ e.target.id.length - 1], e.target.id[ e.target.id.length - 2 ] ];
 		let squareEl = e.target;
 		if(gameFlow.board[squareData[0]] == ""){
-
 			// If the div tag was pressed, find the span child and put the mark inside it.
 			if(squareData[1] == "D"){
 				squareEl.firstChild.textContent = currentMark(gameFlow.players);
+
+				/**
+				* assign the mark to the corresponding square in our board obj.
+				**/
+				gameFlow.board[squareData[0]] = currentMark(gameFlow.players);
 				toggleTurn(gameFlow.players);
 			}
+			else if(squareData[1] == "S"){
+				squareEl.textContent = currentMark(gameFlow.players);
 
-			// TODO: If the span tag is pressed. Puth the mark inside it.
+				/**
+				* assign the mark to the corresponding square in our board obj.
+				**/
+				gameFlow.board[squareData[0]] = currentMark(gameFlow.players);
+				toggleTurn(gameFlow.players);
+			}
 		}
-
+		_checkGame(gameFlow.board);
+		_highlightPlayerTurn(gameFlow.players);
 	};
 
 	return {
@@ -373,6 +462,7 @@ const DOMFuncs = (function(){
 
 		//Gameboard
 			//Users
+		usersDisplay, //const
 		openCloseInputDiv, //function
 
 			//Board
@@ -414,11 +504,11 @@ historyBtn.addEventListener("click", DOMFuncs.expandHistoryContent);
 
 	/*Gameboard*/
 		//Users
-const usersDisplay = document.querySelectorAll(".user-display");
-usersDisplay.forEach(display => display.addEventListener("click", DOMFuncs.openCloseInputDiv));
+
+DOMFuncs.usersDisplay.forEach(display => display.addEventListener("click", DOMFuncs.openCloseInputDiv));
 
 		//Board
 DOMFuncs.squares.forEach(square => square.addEventListener("click", DOMFuncs.markSquare));
 //Calling functions
 DOMFuncs.displayHistoryItems();
-DOMFuncs.createPlayers(gameFlow.players, usersDisplay);
+DOMFuncs.createPlayers(gameFlow.players, DOMFuncs.usersDisplay);

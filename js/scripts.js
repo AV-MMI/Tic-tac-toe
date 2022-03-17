@@ -5,6 +5,7 @@ const gameFlow = {
 	board: {0: "", 3: "", 6: "",
 			1: "", 4: "", 7: "",
 			2: "", 5: "", 8: "",},
+	status: true, //Indicates wheter the players can play or not.
 };
 
 const local = {
@@ -50,35 +51,9 @@ const DOMFuncs = (function(){
 
 	//---Private Methods and Variables---.
 		/*History*/
-	function _pushDataToHistoryObj(historyData){
-		historyData = {
-			date: local.utils.history.currDate(),
-			name: "Jane Doe",
-			id: local.utils.history.dataId,
-		};
-
-		gameFlow.history[local.utils.history.dataId] = historyData;
-		local.utils.history.dataId++;
-	};
-
-	function _removeHistoryItem(e){
-		const divCont = e.target.parentElement;
-		const liCont = divCont.parentElement;
-		const itemId = divCont.id;
-
-		let fInterval;
-		let cancelInterval;
-		fInterval = setInterval(_deletingFromTheDOM, 100);
-		delete gameFlow.history[itemId];
-
-		function _deletingFromTheDOM(){
-			ulHistoryContent.removeChild(liCont)
-			clearInterval(fInterval);
-		}
-	};
-
-
 	function _createHistoryItems(data, idx, parent){
+		console.log(data);
+		console.log(idx);
 		//Creating each element.
 		const liCont = document.createElement("li");
 		const divCont = document.createElement("div");
@@ -109,6 +84,34 @@ const DOMFuncs = (function(){
 
 		liCont.appendChild(divCont);
 		parent.appendChild(liCont);
+	};
+
+	function _removeHistoryItem(e){
+		const divCont = e.target.parentElement;
+		const liCont = divCont.parentElement;
+		const itemId = divCont.id;
+
+		let fInterval;
+		let cancelInterval;
+		fInterval = setInterval(_deletingFromTheDOM, 100);
+		delete gameFlow.history[itemId];
+
+		function _deletingFromTheDOM(){
+			ulHistoryContent.removeChild(liCont)
+			clearInterval(fInterval);
+		}
+	};
+
+
+	function _pushDataToHistoryObj(name="Odisseus"){
+		let historyData = {
+			date: local.utils.history.currDate(),
+			name: name,
+			id: local.utils.history.dataId,
+		};
+
+		gameFlow.history[local.utils.history.dataId] = historyData;
+		local.utils.history.dataId++;
 	};
 
 		/*Gameboard*/
@@ -184,46 +187,65 @@ const DOMFuncs = (function(){
 		let winner;
 
 		//Vertical.
-		if(obj["0"] !== "" && obj["0"] == obj["1"] && obj["1"] == obj["2"]){
+		if(obj["0"] !== "" && obj["0"] == obj["1"] && obj["1"] == obj["2"] && gameFlow.status){
 			winner = (gameFlow.players.leftPlayer.mark == obj["0"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-			console.log(winner);
+			_pushDataToHistoryObj(winner);
+			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
+			gameFlow.status = false;
 		}
 
-		else if(obj["3"] !== "" && obj["3"] == obj["4"] && obj["4"] == obj["5"]){
+		else if(obj["3"] !== "" && obj["3"] == obj["4"] && obj["4"] == obj["5"] && gameFlow.status){
 			winner = (gameFlow.players.leftPlayer.mark == obj["3"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-			console.log(winner);
+			_pushDataToHistoryObj(winner);
+			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
+			gameFlow.status = false;
 		}
 
-		else if(obj["6"] !== "" && obj["6"] == obj["7"] && obj["7"] == obj["8"]){
+		else if(obj["6"] !== "" && obj["6"] == obj["7"] && obj["7"] == obj["8"] && gameFlow.status){
 			winner = (gameFlow.players.leftPlayer.mark == obj["6"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-			console.log(winner);
+			_pushDataToHistoryObj(winner);
+			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
+			gameFlow.status = false;
 		}
 
 		//Horizontal.
-		else if(obj["0"] !== "" && obj["0"] == obj["3"] && obj["3"] == obj["6"]){
+		else if(obj["0"] !== "" && obj["0"] == obj["3"] && obj["3"] == obj["6"] && gameFlow.status){
 			winner = (gameFlow.players.leftPlayer.mark == obj["0"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-			console.log(winner);
+			_pushDataToHistoryObj(winner);
+			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
+			gameFlow.status = false;
 		}
 
-		else if(obj["1"] !== "" && obj["1"] == obj["4"] && obj["4"] == obj["7"]){
+		else if(obj["1"] !== "" && obj["1"] == obj["4"] && obj["4"] == obj["7"] && gameFlow.status){
 			winner = (gameFlow.players.leftPlayer.mark == obj["1"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-			console.log(winner);
+			_pushDataToHistoryObj(winner);
+			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
+			gameFlow.status = false;
 		}
 
-		else if(obj["2"] !== "" && obj["2"] == obj["5"] && obj["5"] == obj["8"]){
+		else if(obj["2"] !== "" && obj["2"] == obj["5"] && obj["5"] == obj["8"] && gameFlow.status){
 			winner = (gameFlow.players.leftPlayer.mark == obj["2"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-			console.log(winner);
+			_pushDataToHistoryObj(winner);
+			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
+			gameFlow.status = false;
 		}
 
 		//Diagonal.
-		else if(obj["0"] !== "" && obj["0"] == obj["4"] && obj["4"] == obj["8"]){
+		else if(obj["0"] !== "" && obj["0"] == obj["4"] && obj["4"] == obj["8"] && gameFlow.status){
 			winner = (gameFlow.players.leftPlayer.mark == obj["0"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-			console.log(winner);
+			_pushDataToHistoryObj(winner);
+			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
+			gameFlow.status = false;
 		}
 
-		else if(obj["2"] !== "" && obj["2"] == obj["4"] && obj["4"] == obj["6"]){
+		else if(obj["2"] !== "" && obj["2"] == obj["4"] && obj["4"] == obj["6"] && gameFlow.status){
 			winner = (gameFlow.players.leftPlayer.mark == obj["2"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-			console.log(winner);
+			_pushDataToHistoryObj(winner);
+			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
+			gameFlow.status = false;
+		}
+		else{
+			_highlightPlayerTurn(gameFlow.players)
 		}
 
 	};
@@ -300,13 +322,9 @@ const DOMFuncs = (function(){
 
 	function displayHistoryItems(){
 		let counter = 0
-		while(counter < Object.keys(gameFlow.history).length){
-			if(gameFlow.history[counter]){
-				_createHistoryItems(gameFlow.history, counter, ulHistoryContent);
-				counter++;
-			}
-			else {
-				counter++;
+		for(let i = 0; i < local.utils.history.dataId; i++){
+			if(gameFlow.history[i]){ //Obj to display, Idx, parentEl.
+				_createHistoryItems(gameFlow.history, i, ulHistoryContent)
 			}
 		}
 	};
@@ -422,9 +440,16 @@ const DOMFuncs = (function(){
 		};
 
 							//ID of square pressed,			Div/Span pressed?
-		let squareData = [e.target.id[ e.target.id.length - 1], e.target.id[ e.target.id.length - 2 ] ];
-		let squareEl = e.target;
-		if(gameFlow.board[squareData[0]] == ""){
+		const squareData = [e.target.id[ e.target.id.length - 1], e.target.id[ e.target.id.length - 2 ] ];
+		const squareEl = e.target;
+		const gameboardBoard = document.querySelector(".gameboard-board");
+
+		if(gameFlow.board[squareData[0]] == "" && gameFlow.status){
+			gameboardBoard.style.borderLeft = "2px solid black";
+			gameboardBoard.style.borderRight = "2px solid black";
+			gameboardBoard.style.borderTop = "none";
+			gameboardBoard.style.borderBottom = "none";
+
 			// If the div tag was pressed, find the span child and put the mark inside it.
 			if(squareData[1] == "D"){
 				squareEl.firstChild.textContent = currentMark(gameFlow.players);
@@ -444,9 +469,12 @@ const DOMFuncs = (function(){
 				gameFlow.board[squareData[0]] = currentMark(gameFlow.players);
 				toggleTurn(gameFlow.players);
 			}
+		} else {
+			gameboardBoard.style.border = "5px solid red";
 		}
+
+
 		_checkGame(gameFlow.board);
-		_highlightPlayerTurn(gameFlow.players);
 	};
 
 	return {

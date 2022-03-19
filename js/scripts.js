@@ -244,6 +244,17 @@ const DOMFuncs = (function(){
 			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
 			gameFlow.status = false;
 		}
+
+		// Check if there has been a draw.
+		else if(obj["0"] !== "" && obj["3"] !== "" && obj["6"] !== "" 
+			&& obj["1"] !== "" && obj["4"] !== "" && obj["7"] !== "" 
+			&& obj["2"] !== "" && obj["5"] !== "" && obj["8"] !== ""){
+			_pushDataToHistoryObj("Draw");
+			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
+			gameFlow.status = false;
+		}
+
+
 		else{
 			_highlightPlayerTurn(gameFlow.players)
 		}

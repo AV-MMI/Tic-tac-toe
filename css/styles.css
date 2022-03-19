@@ -374,8 +374,9 @@ input {
 
 /***gameboard-bottom***/
 .gameboard-bottom {
-  background-color: red;
-  width: 100%;
+  border: 2px solid #000000;
+  width: 500px;
+  height: 30px;
 }
 
 .start-restart {

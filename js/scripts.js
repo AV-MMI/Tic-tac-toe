@@ -52,8 +52,6 @@ const DOMFuncs = (function(){
 	//---Private Methods and Variables---.
 		/*History*/
 	function _createHistoryItems(data, idx, parent){
-		console.log(data);
-		console.log(idx);
 		//Creating each element.
 		const liCont = document.createElement("li");
 		const divCont = document.createElement("div");
@@ -156,11 +154,11 @@ const DOMFuncs = (function(){
 		}
 	}
 
-		//Board:
-			/**
-			* assign the initial turn to one of the players in an
-			* random way.
-			**/
+			//Board:
+				/**
+				* assign the initial turn to one of the players in an
+				* random way.
+				**/
 
 	function _assignRandomTurn(obj){
 		function _generateRandomNum(max){
@@ -175,14 +173,13 @@ const DOMFuncs = (function(){
 			obj.rightPlayer.turn = true;
 		};
 	};
-			/**
-			* Check the gameboard looking for winning moves, if there is any
-			* it will display a message for the winner in the div gameboard-bottom.
-			* It will check for three different patterns: Vertical, Horizontal, and Diagonal
-			* moves. It also will be invoked every time a player makes a move.
-			**/
+				/**
+				* Check the gameboard looking for winning moves, if there is any
+				* it will display a message for the winner in the div gameboard-bottom.
+				* It will check for three different patterns: Vertical, Horizontal, and Diagonal
+				* moves. It also will be invoked every time a player makes a move.
+				**/
 
-			// TODO: Change the board-bottom to make a display for the winner.
 	function _checkGame(obj){
 		let winner;
 
@@ -192,6 +189,8 @@ const DOMFuncs = (function(){
 			_pushDataToHistoryObj(winner);
 			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
 			gameFlow.status = false;
+
+			_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 		}
 
 		else if(obj["3"] !== "" && obj["3"] == obj["4"] && obj["4"] == obj["5"] && gameFlow.status){
@@ -199,6 +198,8 @@ const DOMFuncs = (function(){
 			_pushDataToHistoryObj(winner);
 			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
 			gameFlow.status = false;
+
+			_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 		}
 
 		else if(obj["6"] !== "" && obj["6"] == obj["7"] && obj["7"] == obj["8"] && gameFlow.status){
@@ -206,6 +207,8 @@ const DOMFuncs = (function(){
 			_pushDataToHistoryObj(winner);
 			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
 			gameFlow.status = false;
+
+			_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 		}
 
 		//Horizontal.
@@ -214,6 +217,8 @@ const DOMFuncs = (function(){
 			_pushDataToHistoryObj(winner);
 			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
 			gameFlow.status = false;
+
+			_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 		}
 
 		else if(obj["1"] !== "" && obj["1"] == obj["4"] && obj["4"] == obj["7"] && gameFlow.status){
@@ -221,6 +226,8 @@ const DOMFuncs = (function(){
 			_pushDataToHistoryObj(winner);
 			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
 			gameFlow.status = false;
+
+			_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 		}
 
 		else if(obj["2"] !== "" && obj["2"] == obj["5"] && obj["5"] == obj["8"] && gameFlow.status){
@@ -228,6 +235,8 @@ const DOMFuncs = (function(){
 			_pushDataToHistoryObj(winner);
 			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
 			gameFlow.status = false;
+
+			_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 		}
 
 		//Diagonal.
@@ -236,6 +245,8 @@ const DOMFuncs = (function(){
 			_pushDataToHistoryObj(winner);
 			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
 			gameFlow.status = false;
+
+			_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 		}
 
 		else if(obj["2"] !== "" && obj["2"] == obj["4"] && obj["4"] == obj["6"] && gameFlow.status){
@@ -243,15 +254,19 @@ const DOMFuncs = (function(){
 			_pushDataToHistoryObj(winner);
 			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
 			gameFlow.status = false;
+
+			_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 		}
 
 		// Check if there has been a draw.
-		else if(obj["0"] !== "" && obj["3"] !== "" && obj["6"] !== "" 
-			&& obj["1"] !== "" && obj["4"] !== "" && obj["7"] !== "" 
-			&& obj["2"] !== "" && obj["5"] !== "" && obj["8"] !== ""){
+		else if(obj["0"] !== "" && obj["3"] !== "" && obj["6"] !== ""
+			&& obj["1"] !== "" && obj["4"] !== "" && obj["7"] !== ""
+			&& obj["2"] !== "" && obj["5"] !== "" && obj["8"] !== "" && gameFlow.status){
 			_pushDataToHistoryObj("Draw");
 			_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
 			gameFlow.status = false;
+
+			_bottomDisplay(`It looks like there have been a draw`, true)
 		}
 
 
@@ -259,6 +274,62 @@ const DOMFuncs = (function(){
 			_highlightPlayerTurn(gameFlow.players)
 		}
 
+	};
+
+			//Bottom-display
+
+				/**
+				* Function in charge of creating the reset button to append it
+				* as a sibling of _bottomSpanDisplay.
+				**/
+	function _createResetButton(){
+		const button = document.createElement("button");
+
+		button.textContent = "Reset Game";
+		button.classList.add("reset-btn");
+		button.addEventListener("click", _resetGame);
+
+		return button;
+	};
+
+				/**
+				* The function of this button
+				* will be reset the game after it is pressed, cleaning in that way
+				* the board obj, and reassigning the current turn in a random way.
+				**/
+
+				/** FIX:
+				* It doesn't clean the board, and when a square is clicked after clicking
+				* the reset button, it just add another reset button...
+				**/
+
+				// TODO: Create the class that our reset button uses.
+	function _resetGame(){
+		for(let i = 0; i < gameFlow.board; i++){
+			gameFlow.board[i] = "";
+		}
+
+		gameFlow.status = true
+
+		displayBoard(gameFlow.board);
+	}
+
+				/**
+				* It's function is to display the message that we will pass
+				* into the bottom display. It takes two parameters, the parameter
+				* msg is the message that it will display, while btnBool will receive
+				* a bool value, which will determine if a reset button (in case the game is finished)
+				* will be added to our message or not.
+				**/
+	const _bottomSpanDisplay = document.querySelector("#bottom-display");
+
+	function _bottomDisplay(msg, btnBool=false){
+		_bottomSpanDisplay.textContent = msg;
+
+		if(btnBool){
+			const parentEl = _bottomSpanDisplay.parentElement;
+			parentEl.appendChild(_createResetButton());
+		}
 	};
 
 	//---Public Methods and Variables---.
@@ -456,6 +527,8 @@ const DOMFuncs = (function(){
 		const gameboardBoard = document.querySelector(".gameboard-board");
 
 		if(gameFlow.board[squareData[0]] == "" && gameFlow.status){
+			_bottomDisplay("Good Luck!")
+
 			gameboardBoard.style.borderLeft = "2px solid black";
 			gameboardBoard.style.borderRight = "2px solid black";
 			gameboardBoard.style.borderTop = "none";

@@ -379,9 +379,12 @@ input {
   height: 30px;
 }
 
-.start-restart {
-  border-radius: 0px;
-  width: 100%;
+.reset-btn {
+  margin-left: 10px;
+}
+
+.reset-btn:hover {
+  color: red;
 }
 
 /***gameboard-AI-btn***/
@@ -393,9 +396,9 @@ input {
   width: auto;
 }
 
-/*.AI--cont:hover {
+.AI--cont-open {
   left: 426px;
-}*/
+}
 
 .AI-btn {
   border-radius: 100%;

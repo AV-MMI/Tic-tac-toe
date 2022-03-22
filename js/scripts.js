@@ -46,8 +46,12 @@ const DOMFuncs = (function(){
 		//Gameboard
 			//users
 	const usersDisplay = document.querySelectorAll(".user-display");
+
 			//board
 	const squares = document.querySelectorAll(".square");
+
+			//AI
+	const AIButton = document.querySelector(".AI-btn");
 
 	//---Private Methods and Variables---.
 		/*History*/
@@ -298,20 +302,17 @@ const DOMFuncs = (function(){
 				* the board obj, and reassigning the current turn in a random way.
 				**/
 
-				/** FIX:
-				* It doesn't clean the board, and when a square is clicked after clicking
-				* the reset button, it just add another reset button...
-				**/
-
-				// TODO: Create the class that our reset button uses.
 	function _resetGame(){
-		for(let i = 0; i < gameFlow.board; i++){
+		for(let i = 0; i < Object.keys(gameFlow.board).length; i++){
 			gameFlow.board[i] = "";
 		}
 
 		gameFlow.status = true
-
 		displayBoard(gameFlow.board);
+
+		const deleteButton = document.querySelector(".reset-btn");
+		deleteButton.remove();
+		_bottomDisplay("Click a square to start playing!")
 	}
 
 				/**
@@ -331,6 +332,13 @@ const DOMFuncs = (function(){
 			parentEl.appendChild(_createResetButton());
 		}
 	};
+
+			//A.I
+
+			/**
+			* Open the A.I menu.
+			**/
+
 
 	//---Public Methods and Variables---.
 		/*How to Play button*/
@@ -561,6 +569,16 @@ const DOMFuncs = (function(){
 		_checkGame(gameFlow.board);
 	};
 
+			//AI
+				/**
+				* Event Handler.
+				* Open the AI menu toggling the AI--cont-open css class.
+				**/
+	function openAIMenu(){
+		const parentEl = AIButton.parentElement;
+		parentEl.classList.toggle("AI--cont-open");
+	}
+
 	return {
 		//How to Play button:
 		createFloatingWindow, //function
@@ -582,6 +600,10 @@ const DOMFuncs = (function(){
 		squares, //const
 		createPlayers,
 		markSquare, //function
+
+			//AI
+		AIButton, //const
+		openAIMenu, //function
 	}
 
 })();
@@ -616,11 +638,14 @@ historyBtn.addEventListener("click", DOMFuncs.expandHistoryContent);
 
 	/*Gameboard*/
 		//Users
-
 DOMFuncs.usersDisplay.forEach(display => display.addEventListener("click", DOMFuncs.openCloseInputDiv));
 
 		//Board
 DOMFuncs.squares.forEach(square => square.addEventListener("click", DOMFuncs.markSquare));
+
+		//AI
+DOMFuncs.AIButton.addEventListener("click", DOMFuncs.openAIMenu);
+
 //Calling functions
 DOMFuncs.displayHistoryItems();
 DOMFuncs.createPlayers(gameFlow.players, DOMFuncs.usersDisplay);

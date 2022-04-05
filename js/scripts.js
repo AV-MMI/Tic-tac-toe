@@ -6,6 +6,11 @@ const gameFlow = {
 			1: "", 4: "", 7: "",
 			2: "", 5: "", 8: "",},
 	status: true, //Indicates wheter the players can play or not.
+	ai: {
+		active: false,
+		difficulty: "easy",
+		mark; "O",
+	}
 };
 
 const local = {
@@ -45,10 +50,11 @@ const DOMFuncs = (function(){
 	//---Public variables---.
 		//Gameboard
 			//users
-	const usersDisplay = document.querySelectorAll(".user-display");
+	const usersDisplay = document.querySelectorAll(".user-display"); // to return
 
 			//board
-	const squares = document.querySelectorAll(".square");
+	const squares = document.querySelectorAll(".square"); // to return
+	const gameboardBoard = document.querySelector(".gameboard-board"); // used by markSquare(e), _resetGame()
 
 			//AI
 	const AIButton = document.querySelector(".AI-btn");
@@ -309,7 +315,8 @@ const DOMFuncs = (function(){
 
 		gameFlow.status = true
 		displayBoard(gameFlow.board);
-
+		gameboardBoard.style.borderLeft = "2px solid black";
+		gameboardBoard.style.borderRight = "2px solid black";
 		const deleteButton = document.querySelector(".reset-btn");
 		deleteButton.remove();
 		_bottomDisplay("Click a square to start playing!")
@@ -532,7 +539,6 @@ const DOMFuncs = (function(){
 							//ID of square pressed,			Div/Span pressed?
 		const squareData = [e.target.id[ e.target.id.length - 1], e.target.id[ e.target.id.length - 2 ] ];
 		const squareEl = e.target;
-		const gameboardBoard = document.querySelector(".gameboard-board");
 
 		if(gameFlow.board[squareData[0]] == "" && gameFlow.status){
 			_bottomDisplay("Good Luck!")

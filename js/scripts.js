@@ -9,8 +9,8 @@ const gameFlow = {
 	ai: {
 		active: false,
 		difficulty: "easy",
-		mark; "O",
-	}
+		mark: "O",
+	},
 };
 
 const local = {

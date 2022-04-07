@@ -431,8 +431,14 @@ input {
 }
 
 .AI-menu-opt-btn:hover {
-  border-bottom: 2px solid #362222;
+  border-bottom: 2px solid #92BA92;
 }
+
+.selected-opt {
+  color: #92BA92;
+}
+
+
 /*Footer*/
 .footer--cont {
   padding: 0px 20px;

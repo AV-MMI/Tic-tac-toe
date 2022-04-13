@@ -8,7 +8,7 @@ const gameFlow = {
 	status: true, //Indicates wheter the players can play or not.
 	ai: {
 		active: false,
-		difficulty: "easy",
+		difficulty: "",
 		mark: "O",
 	},
 };
@@ -585,6 +585,28 @@ const DOMFuncs = (function(){
 		parentEl.classList.toggle("AI--cont-open");
 	}
 
+
+				/**
+				* NodeList.
+				* It contains all the elements with the css class "AI-menu-opt-btn".
+				* Will be used in: selectedOpt(e).
+				**/
+	const difficultyOpts = document.querySelectorAll(".AI-menu-opt-btn");
+
+				/**
+				* Event Handler.
+				* It assigns the css class "selected-opt" to the element triggered
+				* by the "click" event. If any other siblings of this element has
+				* the css class "selected-opt", then it will remove it from that element.
+				**/
+	function selectedOpt(e){
+		const triggeredOpt = e.target;
+
+		for(node of difficultyOpts){
+			console.log(node)
+		}
+	}
+
 	return {
 		//How to Play button:
 		createFloatingWindow, //function
@@ -610,6 +632,8 @@ const DOMFuncs = (function(){
 			//AI
 		AIButton, //const
 		openAIMenu, //function
+		difficultyOpts, //nodelist
+		selectedOpt, //event handler
 	}
 
 })();
@@ -651,6 +675,7 @@ DOMFuncs.squares.forEach(square => square.addEventListener("click", DOMFuncs.mar
 
 		//AI
 DOMFuncs.AIButton.addEventListener("click", DOMFuncs.openAIMenu);
+DOMFuncs.difficultyOpts.forEach(option => option.addEventListener("click", DOMFuncs.selectedOpt));
 
 //Calling functions
 DOMFuncs.displayHistoryItems();

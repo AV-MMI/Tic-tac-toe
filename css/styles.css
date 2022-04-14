@@ -427,7 +427,7 @@ input {
   border-bottom: 2px solid #fff;
   background-color: #fff;
   cursor: pointer;
-  transition: border 0.5s;
+  transition: all 0.8s;
 }
 
 .AI-menu-opt-btn:hover {

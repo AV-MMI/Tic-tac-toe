@@ -603,7 +603,18 @@ const DOMFuncs = (function(){
 		const triggeredOpt = e.target;
 
 		for(node of difficultyOpts){
-			console.log(node)
+			if(node == triggeredOpt){
+				triggeredOpt.classList.add("selected-opt");
+
+				gameFlow.ai.active = true;
+				gameFlow.ai.difficulty = [triggeredOpt.id][0].slice(4);
+			}
+			
+			else {
+				if(node.classList.contains("selected-opt")){
+					node.classList.remove("selected-opt");
+				}
+			}
 		}
 	}
 

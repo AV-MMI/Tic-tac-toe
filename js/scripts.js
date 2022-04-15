@@ -5,11 +5,15 @@ const gameFlow = {
 	board: {0: "", 3: "", 6: "",
 			1: "", 4: "", 7: "",
 			2: "", 5: "", 8: "",},
-	status: true, //Indicates wheter the players can play or not.
+	status: true, // Indicates whether the game has ended or not..
 	ai: {
 		active: false,
 		difficulty: "",
-		mark: "O",
+		mark: "",
+		turn: false,
+		cont: { player: "",
+				number: "",
+			},
 	},
 };
 
@@ -50,7 +54,11 @@ const DOMFuncs = (function(){
 	//---Public variables---.
 		//Gameboard
 			//users
-	const usersDisplay = document.querySelectorAll(".user-display"); // to return
+				/**
+				* NodeList.
+				* Contains the elements in charge of displaying the name of each player.
+				**/
+	const usersDisplay = document.querySelectorAll(".user-display");
 
 			//board
 	const squares = document.querySelectorAll(".square"); // to return
@@ -342,10 +350,41 @@ const DOMFuncs = (function(){
 
 			//A.I
 
-			/**
-			* Open the A.I menu.
-			**/
+				/**
+				* Function.
+				* It takes the display of the user whose turn property is equal to false,
+				* and assign that container to display our AI.
+				**/
+	function _invokeAI(){
+		let aiDisplay; // User display in which our AI will be displayed.
 
+		/**
+		* Check what user has the turn property set to false.
+		* - Assign the container number to aiContainer.
+		* - Store the name of the player that owns that container.
+		* - Assign the mark of that player to our ai.
+		**/
+		for(player in gameFlow.players){
+			if(!gameFlow.players[player].turn){
+				gameFlow.ai.cont.number = gameFlow.players[player].container;
+				gameFlow.ai.cont.player = gameFlow.players[player].name;
+				gameFlow.ai.mark = gameFlow.players[player].mark;
+			}
+		}
+
+		/**
+		* Display A.I in the previously assigned container.
+		*	- Assign "Artificial Intelligence" to the textContent of the designed
+		*	  container.
+		**/
+		for(node of usersDisplay){
+			if(node.id[ node.id.length - 1 ] == gameFlow.ai.cont.number){
+				aiDisplay = node;
+			}
+		}
+
+		aiDisplay.textContent = "Artificial Intelligence";
+	}
 
 	//---Public Methods and Variables---.
 		/*How to Play button*/
@@ -519,6 +558,11 @@ const DOMFuncs = (function(){
 			**/
 	function markSquare(e){
 		function toggleTurn(obj){
+			/**
+			* TODO:
+			*	- Check whether the AI is on the right or left cont.
+			*	- Toggle turns in the designated way.
+			**/
 			if(obj.leftPlayer.turn){
 				obj.rightPlayer.turn = true;
 				obj.leftPlayer.turn = false;
@@ -598,24 +642,34 @@ const DOMFuncs = (function(){
 				* It assigns the css class "selected-opt" to the element triggered
 				* by the "click" event. If any other siblings of this element has
 				* the css class "selected-opt", then it will remove it from that element.
+				*	- If any of the siblings of the triggered opt contains the css class
+				* 	  "selected-opt" remove it from them.
+				*
+				*	- Once an option has been chosen, close the AI menu.
 				**/
 	function selectedOpt(e){
 		const triggeredOpt = e.target;
 
 		for(node of difficultyOpts){
 			if(node == triggeredOpt){
-				triggeredOpt.classList.add("selected-opt");
+				if(!gameFlow.ai.active){
+					_invokeAI();
+				}
 
+
+				triggeredOpt.classList.add("selected-opt");
 				gameFlow.ai.active = true;
 				gameFlow.ai.difficulty = [triggeredOpt.id][0].slice(4);
 			}
-			
+
 			else {
 				if(node.classList.contains("selected-opt")){
 					node.classList.remove("selected-opt");
 				}
 			}
 		}
+
+		openAIMenu();
 	}
 
 	return {
@@ -652,12 +706,10 @@ const DOMFuncs = (function(){
 
 
 /*V________TESTING_________V*/
-console.log(gameFlow)
 DOMFuncs._pushDataToHistoryObj();
 DOMFuncs._pushDataToHistoryObj();
 DOMFuncs._pushDataToHistoryObj();
 DOMFuncs._pushDataToHistoryObj();
-console.log(gameFlow)
 DOMFuncs.displayBoard(gameFlow.board);
 
 /*^________TESTING_________^*/

@@ -235,7 +235,7 @@ input {
 }
 /**Gameboard**/
 .gameboard--cont {
-  margin-left: 200px;
+  margin-left: 100px;
 }
 
 /***Gameboard users***/
@@ -297,7 +297,6 @@ input {
   padding: 0px 5px;
   border-right: 1px solid white;
   cursor: pointer;
-  color = black;
   transition: color 0.5s;
 }
 

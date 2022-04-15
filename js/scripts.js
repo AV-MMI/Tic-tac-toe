@@ -151,24 +151,28 @@ const DOMFuncs = (function(){
 	const _inputBox = document.querySelectorAll(".input-box");
 	_inputBox.forEach(input => input.addEventListener("input", _updateUsername));
 
+				/**
+				* _highlightPlayerTurn(obj)
+				* highlight the container in which the player has the turn to mark the square.
+				*	- If the current node of the nodeList usersDisplay coincides with the container
+				*	of the player with the current turn, add the respective border.
+				*
+				*	- In case the current node does not coincide with the container of the user with
+				*	the current turn, remove the border.
+				**/
 
+				/**
+				* TODO:
+				* - Adapt to cover the A.I functionality.
+				**/
 	function _highlightPlayerTurn(obj){
-		if(obj.leftPlayer.turn){
-			for(let i = 0; i < usersDisplay.length; i++){
-				if(usersDisplay[i].id[ usersDisplay[i].id.length - 1] == obj.leftPlayer.container){
-					usersDisplay[i].parentElement.style.border = "2px solid #00FFDD";
-					usersDisplay[ obj.rightPlayer.container ].parentElement.style.border = "1px solid #000";
-				}
+		for(node of usersDisplay){
+			if(node.id[ node.id.length - 1 ] == obj.leftPlayer.container && obj.leftPlayer.turn ||
+				node.id [ node.id.length - 1 ] == obj.rightPlayer.container && obj.rightPlayer.turn){
+				node.parentElement.style.border = "1px solid #00FFDD";
+			} else {
+				node.parentElement.style.border = "1px solid #000";
 			}
-		} else {
-
-			for(let i = 0; i < usersDisplay.length; i++){
-				if(usersDisplay[i].id[ usersDisplay[i].id.length - 1] == obj.rightPlayer.container){
-					usersDisplay[i].parentElement.style.border = "1px solid #00FFDD";
-					usersDisplay[ obj.leftPlayer.container ].parentElement.style.border = "1px solid #000";
-				}
-			}
-
 		}
 	}
 
@@ -557,19 +561,22 @@ const DOMFuncs = (function(){
 			* set the mark of the user with the current turn.
 			**/
 	function markSquare(e){
-		function toggleTurn(obj){
+		function toggleTurn(obj, aiActive=false){
 			/**
 			* TODO:
 			*	- Check whether the AI is on the right or left cont.
 			*	- Toggle turns in the designated way.
 			**/
-			if(obj.leftPlayer.turn){
-				obj.rightPlayer.turn = true;
-				obj.leftPlayer.turn = false;
-			} else {
-				obj.rightPlayer.turn = false;
-				obj.leftPlayer.turn = true;
+			if(!aiActive){
+				if(obj.leftPlayer.turn){
+					obj.rightPlayer.turn = true;
+					obj.leftPlayer.turn = false;
+				} else {
+					obj.rightPlayer.turn = false;
+					obj.leftPlayer.turn = true;
+				}
 			}
+
 		}
 
 		function currentMark(obj){
@@ -600,7 +607,7 @@ const DOMFuncs = (function(){
 				* assign the mark to the corresponding square in our board obj.
 				**/
 				gameFlow.board[squareData[0]] = currentMark(gameFlow.players);
-				toggleTurn(gameFlow.players);
+				toggleTurn(gameFlow.players, gameFlow.ai.active);
 			}
 			else if(squareData[1] == "S"){
 				squareEl.textContent = currentMark(gameFlow.players);
@@ -609,7 +616,7 @@ const DOMFuncs = (function(){
 				* assign the mark to the corresponding square in our board obj.
 				**/
 				gameFlow.board[squareData[0]] = currentMark(gameFlow.players);
-				toggleTurn(gameFlow.players);
+				toggleTurn(gameFlow.players, gameFlow.ai.active);
 			}
 		} else {
 			gameboardBoard.style.border = "5px solid red";

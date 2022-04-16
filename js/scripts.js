@@ -569,9 +569,13 @@ const DOMFuncs = (function(){
 			* it will check which player is in turn to play, and will
 			* set the mark of the user with the current turn.
 			**/
-			let aiCont;
-			let PlayerCont;
+
 	function markSquare(e){
+		if(gameFlow.ai.active){
+			let aiCont = gameFlow.ai.cont.number;
+			let playerSide = (aiCont == 1) ? "leftPlayer" : "rightPlayer";
+		}
+
 		function toggleTurn(obj, aiActive=false){
 			/**
 			* TODO:
@@ -579,27 +583,38 @@ const DOMFuncs = (function(){
 			*	- Toggle turns in the designated way.
 			**/
 			if(!aiActive){
-				if(obj.leftPlayer.turn){
-					obj.rightPlayer.turn = true;
-					obj.leftPlayer.turn = false;
+				if(obj.players.leftPlayer.turn){
+					obj.players.rightPlayer.turn = true;
+					obj.players.leftPlayer.turn = false;
 				} else {
-					obj.rightPlayer.turn = false;
-					obj.leftPlayer.turn = true;
+					obj.players.rightPlayer.turn = false;
+					obj.players.leftPlayer.turn = true;
 				}
 			} else {
-				aiCont = gameFlow.ai.cont.number;
-				playerCont = (aiCont == 1) ? 0 : 1;
-
-				console.log(["ai", aiCont], ["playerCont", playerCont]);
+				if(obj.players[playerSide].turn){
+					obj.ai.turn = true;
+					obj.players[playerSide].turn = false;
+				} else {
+					obj.players[playerSide].turn = true;
+					obj.ai.turn = false;
+				}
 			}
 
 		}
 
-		function currentMark(obj){
-			if(obj.leftPlayer.turn){
-				return obj.leftPlayer.mark;
+		function currentMark(obj, aiActive=false){
+			if(!aiActive){
+				if(obj.players.leftPlayer.turn){
+					return obj.players.leftPlayer.mark;
+				} else {
+					return obj.players.rightPlayer.mark;
+				}
 			} else {
-				return obj.rightPlayer.mark;
+				if(obj.players[playerSide].turn){
+					return obj.players[playerSide].mark;
+				} else {
+					return obj.ai.mark;
+				}
 			}
 		};
 
@@ -617,22 +632,22 @@ const DOMFuncs = (function(){
 
 			// If the div tag was pressed, find the span child and put the mark inside it.
 			if(squareData[1] == "D"){
-				squareEl.firstChild.textContent = currentMark(gameFlow.players);
+				squareEl.firstChild.textContent = currentMark(gameFlow, gameFlow.ai.active);
 
 				/**
 				* assign the mark to the corresponding square in our board obj.
 				**/
-				gameFlow.board[squareData[0]] = currentMark(gameFlow.players);
-				toggleTurn(gameFlow.players, gameFlow.ai.active);
+				gameFlow.board[squareData[0]] = currentMark(gameFlow, gameFlow.ai.active);
+				toggleTurn(gameFlow, gameFlow.ai.active);
 			}
 			else if(squareData[1] == "S"){
-				squareEl.textContent = currentMark(gameFlow.players);
+				squareEl.textContent = currentMark(gameFlow, gameFlow.ai.active);
 
 				/**
 				* assign the mark to the corresponding square in our board obj.
 				**/
-				gameFlow.board[squareData[0]] = currentMark(gameFlow.players);
-				toggleTurn(gameFlow.players, gameFlow.ai.active);
+				gameFlow.board[squareData[0]] = currentMark(gameFlow, gameFlow.ai.active);
+				toggleTurn(gameFlow, gameFlow.ai.active);
 			}
 		} else {
 			gameboardBoard.style.border = "5px solid red";

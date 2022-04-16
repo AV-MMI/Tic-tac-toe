@@ -165,13 +165,15 @@ const DOMFuncs = (function(){
 				* TODO:
 				* - Adapt to cover the A.I functionality.
 				**/
-	function _highlightPlayerTurn(obj){
-		for(node of usersDisplay){
-			if(node.id[ node.id.length - 1 ] == obj.leftPlayer.container && obj.leftPlayer.turn ||
-				node.id [ node.id.length - 1 ] == obj.rightPlayer.container && obj.rightPlayer.turn){
-				node.parentElement.style.border = "1px solid #00FFDD";
-			} else {
-				node.parentElement.style.border = "1px solid #000";
+	function _highlightPlayerTurn(obj, aiActive=false){
+		if(!aiActive){
+			for(node of usersDisplay){
+				if(node.id[ node.id.length - 1 ] == obj.leftPlayer.container && obj.leftPlayer.turn ||
+					node.id [ node.id.length - 1 ] == obj.rightPlayer.container && obj.rightPlayer.turn){
+					node.parentElement.style.border = "1px solid #00FFDD";
+				} else {
+					node.parentElement.style.border = "1px solid #000";
+				}
 			}
 		}
 	}
@@ -183,6 +185,7 @@ const DOMFuncs = (function(){
 				**/
 
 	function _assignRandomTurn(obj){
+		console.log("assigned turn.", obj)
 		function _generateRandomNum(max){
 			return Math.floor(Math.random() * max);
 		};
@@ -191,8 +194,10 @@ const DOMFuncs = (function(){
 
 		if(randomNum == 1){
 			obj.leftPlayer.turn = true;
+			obj.rightPlayer.turn = false;
 		} else {
 			obj.rightPlayer.turn = true;
+			obj.leftPlayer.turn = false;
 		};
 	};
 				/**
@@ -315,8 +320,8 @@ const DOMFuncs = (function(){
 	};
 
 				/**
-				* The function of this button
-				* will be reset the game after it is pressed, cleaning in that way
+				* Event Handler.
+				* will reset the game after its event is triggered, cleaning in that way
 				* the board obj, and reassigning the current turn in a random way.
 				**/
 
@@ -326,12 +331,16 @@ const DOMFuncs = (function(){
 		}
 
 		gameFlow.status = true
+
 		displayBoard(gameFlow.board);
 		gameboardBoard.style.borderLeft = "2px solid black";
 		gameboardBoard.style.borderRight = "2px solid black";
+
 		const deleteButton = document.querySelector(".reset-btn");
 		deleteButton.remove();
-		_bottomDisplay("Click a square to start playing!")
+		_assignRandomTurn(gameFlow.players);
+		_highlightPlayerTurn(gameFlow.players, gameFlow.ai.active);
+		_bottomDisplay("Click a square to start playing!");
 	}
 
 				/**
@@ -560,6 +569,8 @@ const DOMFuncs = (function(){
 			* it will check which player is in turn to play, and will
 			* set the mark of the user with the current turn.
 			**/
+			let aiCont;
+			let PlayerCont;
 	function markSquare(e){
 		function toggleTurn(obj, aiActive=false){
 			/**
@@ -575,6 +586,11 @@ const DOMFuncs = (function(){
 					obj.rightPlayer.turn = false;
 					obj.leftPlayer.turn = true;
 				}
+			} else {
+				aiCont = gameFlow.ai.cont.number;
+				playerCont = (aiCont == 1) ? 0 : 1;
+
+				console.log(["ai", aiCont], ["playerCont", playerCont]);
 			}
 
 		}

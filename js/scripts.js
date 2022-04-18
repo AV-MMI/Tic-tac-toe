@@ -7,7 +7,7 @@ const gameFlow = {
 			2: "", 5: "", 8: "",},
 	status: true, // Indicates whether the game has ended or not..
 	ai: {
-		active: false,
+		isActive: false,
 		difficulty: "",
 		mark: "",
 		turn: false,
@@ -66,6 +66,9 @@ const DOMFuncs = (function(){
 
 			//AI
 	const AIButton = document.querySelector(".AI-btn");
+	let aiCont = gameFlow.ai.cont.number; // used by inner functions: toggleTurn(), currentMark(), of markSquare(). Also used by _highlightPlayerTurn();
+	let playerSide = (aiCont == 1) ? "leftPlayer" : "rightPlayer"; // used by inner functions: toggleTurn(), currentMark(), of markSquare();
+
 
 	//---Private Methods and Variables---.
 		/*History*/
@@ -165,8 +168,9 @@ const DOMFuncs = (function(){
 				* TODO:
 				* - Adapt to cover the A.I functionality.
 				**/
-	function _highlightPlayerTurn(obj, aiActive=false){
-		if(!aiActive){
+	function _highlightPlayerTurn(obj, aiIsActive){
+		if(!aiIsActive){
+			console.log("test1")
 			for(node of usersDisplay){
 				if(node.id[ node.id.length - 1 ] == obj.leftPlayer.container && obj.leftPlayer.turn ||
 					node.id [ node.id.length - 1 ] == obj.rightPlayer.container && obj.rightPlayer.turn){
@@ -175,6 +179,9 @@ const DOMFuncs = (function(){
 					node.parentElement.style.border = "1px solid #000";
 				}
 			}
+		}
+		else {
+			console.log("aiActive is not isActive.")
 		}
 	}
 
@@ -298,7 +305,7 @@ const DOMFuncs = (function(){
 
 
 		else{
-			_highlightPlayerTurn(gameFlow.players)
+			_highlightPlayerTurn(gameFlow.players, gameFlow.ai.status);
 		}
 
 	};
@@ -339,7 +346,7 @@ const DOMFuncs = (function(){
 		const deleteButton = document.querySelector(".reset-btn");
 		deleteButton.remove();
 		_assignRandomTurn(gameFlow.players);
-		_highlightPlayerTurn(gameFlow.players, gameFlow.ai.active);
+		_highlightPlayerTurn(gameFlow.players, gameFlow.ai.isActive);
 		_bottomDisplay("Click a square to start playing!");
 	}
 
@@ -387,8 +394,7 @@ const DOMFuncs = (function(){
 
 		/**
 		* Display A.I in the previously assigned container.
-		*	- Assign "Artificial Intelligence" to the textContent of the designed
-		*	  container.
+		*	- Assign "Artificial Intelligence" to the textContent of the designed container.
 		**/
 		for(node of usersDisplay){
 			if(node.id[ node.id.length - 1 ] == gameFlow.ai.cont.number){
@@ -571,12 +577,8 @@ const DOMFuncs = (function(){
 			**/
 
 	function markSquare(e){
-		if(gameFlow.ai.active){
-			let aiCont = gameFlow.ai.cont.number;
-			let playerSide = (aiCont == 1) ? "leftPlayer" : "rightPlayer";
-		}
 
-		function toggleTurn(obj, aiActive=false){
+		function toggleTurn(obj, aiActive){
 			/**
 			* TODO:
 			*	- Check whether the AI is on the right or left cont.
@@ -602,14 +604,17 @@ const DOMFuncs = (function(){
 
 		}
 
-		function currentMark(obj, aiActive=false){
+		function currentMark(obj, aiActive){
 			if(!aiActive){
 				if(obj.players.leftPlayer.turn){
 					return obj.players.leftPlayer.mark;
 				} else {
 					return obj.players.rightPlayer.mark;
 				}
-			} else {
+			}
+
+			else if(aiActive){
+				console.log("curr")
 				if(obj.players[playerSide].turn){
 					return obj.players[playerSide].mark;
 				} else {
@@ -632,22 +637,22 @@ const DOMFuncs = (function(){
 
 			// If the div tag was pressed, find the span child and put the mark inside it.
 			if(squareData[1] == "D"){
-				squareEl.firstChild.textContent = currentMark(gameFlow, gameFlow.ai.active);
+				squareEl.firstChild.textContent = currentMark(gameFlow, gameFlow.ai.isActive);
 
 				/**
 				* assign the mark to the corresponding square in our board obj.
 				**/
-				gameFlow.board[squareData[0]] = currentMark(gameFlow, gameFlow.ai.active);
-				toggleTurn(gameFlow, gameFlow.ai.active);
+				gameFlow.board[squareData[0]] = currentMark(gameFlow, gameFlow.ai.isActive);
+				toggleTurn(gameFlow, gameFlow.ai.isActive);
 			}
 			else if(squareData[1] == "S"){
-				squareEl.textContent = currentMark(gameFlow, gameFlow.ai.active);
+				squareEl.textContent = currentMark(gameFlow, gameFlow.ai.isActive);
 
 				/**
 				* assign the mark to the corresponding square in our board obj.
 				**/
-				gameFlow.board[squareData[0]] = currentMark(gameFlow, gameFlow.ai.active);
-				toggleTurn(gameFlow, gameFlow.ai.active);
+				gameFlow.board[squareData[0]] = currentMark(gameFlow, gameFlow.ai.isActive);
+				toggleTurn(gameFlow, gameFlow.ai.isActive);
 			}
 		} else {
 			gameboardBoard.style.border = "5px solid red";
@@ -690,13 +695,13 @@ const DOMFuncs = (function(){
 
 		for(node of difficultyOpts){
 			if(node == triggeredOpt){
-				if(!gameFlow.ai.active){
+				if(!gameFlow.ai.isActive){
 					_invokeAI();
 				}
 
 
 				triggeredOpt.classList.add("selected-opt");
-				gameFlow.ai.active = true;
+				gameFlow.ai.isActive = true;
 				gameFlow.ai.difficulty = [triggeredOpt.id][0].slice(4);
 			}
 

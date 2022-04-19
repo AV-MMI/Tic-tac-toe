@@ -66,8 +66,8 @@ const DOMFuncs = (function(){
 
 			//AI
 	const AIButton = document.querySelector(".AI-btn");
-	let aiCont = gameFlow.ai.cont.number; // used by inner functions: toggleTurn(), currentMark(), of markSquare(). Also used by _highlightPlayerTurn();
-	let playerSide = (aiCont == 1) ? "leftPlayer" : "rightPlayer"; // used by inner functions: toggleTurn(), currentMark(), of markSquare();
+	//let aiCont = gameFlow.ai.cont.number; // used by inner functions: toggleTurn(), currentMark(), of markSquare(). Also used by _highlightPlayerTurn();
+	//let playerSide = (aiCont == 1) ? "leftPlayer" : "rightPlayer"; // used by inner functions: toggleTurn(), currentMark(), of markSquare();
 
 
 	//---Private Methods and Variables---.
@@ -170,7 +170,7 @@ const DOMFuncs = (function(){
 				**/
 	function _highlightPlayerTurn(obj, aiIsActive){
 		if(!aiIsActive){
-			console.log("test1")
+			console.log("not active", aiIsActive);
 			for(node of usersDisplay){
 				if(node.id[ node.id.length - 1 ] == obj.leftPlayer.container && obj.leftPlayer.turn ||
 					node.id [ node.id.length - 1 ] == obj.rightPlayer.container && obj.rightPlayer.turn){
@@ -181,7 +181,7 @@ const DOMFuncs = (function(){
 			}
 		}
 		else {
-			console.log("aiActive is not isActive.")
+			console.log("aiActive is isActive.")
 		}
 	}
 
@@ -192,7 +192,6 @@ const DOMFuncs = (function(){
 				**/
 
 	function _assignRandomTurn(obj){
-		console.log("assigned turn.", obj)
 		function _generateRandomNum(max){
 			return Math.floor(Math.random() * max);
 		};
@@ -305,7 +304,7 @@ const DOMFuncs = (function(){
 
 
 		else{
-			_highlightPlayerTurn(gameFlow.players, gameFlow.ai.status);
+			_highlightPlayerTurn(gameFlow.players, gameFlow.ai.isActive);
 		}
 
 	};
@@ -566,7 +565,7 @@ const DOMFuncs = (function(){
 			gameFlow.players["rightPlayer"] = rightPlayer;
 
 			_assignRandomTurn(gameFlow.players);
-			_highlightPlayerTurn(gameFlow.players);
+			_highlightPlayerTurn(gameFlow.players, gameFlow.ai.isActive);
 		}
 	}
 
@@ -577,7 +576,8 @@ const DOMFuncs = (function(){
 			**/
 
 	function markSquare(e){
-
+		let aiCont = gameFlow.ai.cont.number;
+		let playerSide = (aiCont == 1) ? "leftPlayer" : "rightPlayer";
 		function toggleTurn(obj, aiActive){
 			/**
 			* TODO:
@@ -596,6 +596,7 @@ const DOMFuncs = (function(){
 				if(obj.players[playerSide].turn){
 					obj.ai.turn = true;
 					obj.players[playerSide].turn = false;
+
 				} else {
 					obj.players[playerSide].turn = true;
 					obj.ai.turn = false;
@@ -614,7 +615,6 @@ const DOMFuncs = (function(){
 			}
 
 			else if(aiActive){
-				console.log("curr")
 				if(obj.players[playerSide].turn){
 					return obj.players[playerSide].mark;
 				} else {

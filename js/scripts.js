@@ -166,22 +166,35 @@ const DOMFuncs = (function(){
 
 				/**
 				* TODO:
-				* - Adapt to cover the A.I functionality.
+				* [-] Adapt to cover the A.I functionality.
+				*		[-] Find what is the container of the ai.
+				*		[-] Switch between containers following the defined behavior.
 				**/
+	let opponent;
 	function _highlightPlayerTurn(obj, aiIsActive){
 		if(!aiIsActive){
 			console.log("not active", aiIsActive);
 			for(node of usersDisplay){
-				if(node.id[ node.id.length - 1 ] == obj.leftPlayer.container && obj.leftPlayer.turn ||
-					node.id [ node.id.length - 1 ] == obj.rightPlayer.container && obj.rightPlayer.turn){
+				if(node.id[ node.id.length - 1 ] == obj.players.leftPlayer.container && obj.players.leftPlayer.turn ||
+					node.id [ node.id.length - 1 ] == obj.players.rightPlayer.container && obj.players.rightPlayer.turn){
 					node.parentElement.style.border = "1px solid #00FFDD";
 				} else {
 					node.parentElement.style.border = "1px solid #000";
 				}
 			}
 		}
+
+
 		else {
-			console.log("aiActive is isActive.")
+			console.log("opponent: ", opponent);
+			for(node of usersDisplay){
+				if(node.id[ node.id.length - 1 ] == obj.ai.cont.number && obj.ai.turn ||
+					node.id[ node.id.length - 1 ] == opponent.cont && !obj.ai.turn ){
+					node.parentElement.style.border = "1px solid #00FFDD";
+				} else {
+					node.parentElement.style.border = "1px solid #000";
+				}
+			}
 		}
 	}
 
@@ -304,7 +317,7 @@ const DOMFuncs = (function(){
 
 
 		else{
-			_highlightPlayerTurn(gameFlow.players, gameFlow.ai.isActive);
+			_highlightPlayerTurn(gameFlow, gameFlow.ai.isActive);
 		}
 
 	};
@@ -345,7 +358,7 @@ const DOMFuncs = (function(){
 		const deleteButton = document.querySelector(".reset-btn");
 		deleteButton.remove();
 		_assignRandomTurn(gameFlow.players);
-		_highlightPlayerTurn(gameFlow.players, gameFlow.ai.isActive);
+		_highlightPlayerTurn(gameFlow, gameFlow.ai.isActive);
 		_bottomDisplay("Click a square to start playing!");
 	}
 
@@ -374,9 +387,8 @@ const DOMFuncs = (function(){
 				* It takes the display of the user whose turn property is equal to false,
 				* and assign that container to display our AI.
 				**/
+	let playerSide; // used by markSquare();
 	function _invokeAI(){
-		let aiDisplay; // User display in which our AI will be displayed.
-
 		/**
 		* Check what user has the turn property set to false.
 		* - Assign the container number to aiContainer.
@@ -388,6 +400,10 @@ const DOMFuncs = (function(){
 				gameFlow.ai.cont.number = gameFlow.players[player].container;
 				gameFlow.ai.cont.player = gameFlow.players[player].name;
 				gameFlow.ai.mark = gameFlow.players[player].mark;
+
+				playerSide = ( gameFlow.ai.cont.number == 0) ? "rightPlayer" : "leftPlayer";
+				opponent = { cont: gameFlow.players[playerSide].container, name: gameFlow.players[playerSide].name}
+				console.log("testing: ", opponent);
 			}
 		}
 
@@ -397,11 +413,10 @@ const DOMFuncs = (function(){
 		**/
 		for(node of usersDisplay){
 			if(node.id[ node.id.length - 1 ] == gameFlow.ai.cont.number){
-				aiDisplay = node;
+				node.textContent = "Artificial Intelligence";
 			}
 		}
 
-		aiDisplay.textContent = "Artificial Intelligence";
 	}
 
 	//---Public Methods and Variables---.
@@ -565,7 +580,7 @@ const DOMFuncs = (function(){
 			gameFlow.players["rightPlayer"] = rightPlayer;
 
 			_assignRandomTurn(gameFlow.players);
-			_highlightPlayerTurn(gameFlow.players, gameFlow.ai.isActive);
+			_highlightPlayerTurn(gameFlow, gameFlow.ai.isActive);
 		}
 	}
 

@@ -10,6 +10,7 @@ const gameFlow = {
 		isActive: false,
 		difficulty: "",
 		mark: "",
+		name: "Artificial Intelligence",
 		turn: false,
 		cont: { player: "",
 				number: "",
@@ -149,6 +150,24 @@ const DOMFuncs = (function(){
 		const _displaySpan = _obtainDisplay(e);
 
 		_displaySpan.textContent = _inputEl.value;
+
+		if(gameFlow.ai.isActive){
+			if(gameFlow.ai.cont.number == _inputN){
+				gameFlow.ai.name = _inputEl.value;
+			} else {
+				for(player in gameFlow.players){
+					gameFlow.players[player].name = _inputEl.value;
+				}
+			}
+
+		} else {
+			for(player in gameFlow.players){
+				if(gameFlow.players[player].container == _inputN){
+					gameFlow.players[player].name = _inputEl.value;
+				}
+			}
+		}
+
 	};
 
 	const _inputBox = document.querySelectorAll(".input-box");
@@ -164,16 +183,9 @@ const DOMFuncs = (function(){
 				*	the current turn, remove the border.
 				**/
 
-				/**
-				* TODO:
-				* [-] Adapt to cover the A.I functionality.
-				*		[-] Find what is the container of the ai.
-				*		[-] Switch between containers following the defined behavior.
-				**/
 	let opponent;
 	function _highlightPlayerTurn(obj, aiIsActive){
 		if(!aiIsActive){
-			console.log("not active", aiIsActive);
 			for(node of usersDisplay){
 				if(node.id[ node.id.length - 1 ] == obj.players.leftPlayer.container && obj.players.leftPlayer.turn ||
 					node.id [ node.id.length - 1 ] == obj.players.rightPlayer.container && obj.players.rightPlayer.turn){
@@ -186,7 +198,6 @@ const DOMFuncs = (function(){
 
 
 		else {
-			console.log("opponent: ", opponent);
 			for(node of usersDisplay){
 				if(node.id[ node.id.length - 1 ] == obj.ai.cont.number && obj.ai.turn ||
 					node.id[ node.id.length - 1 ] == opponent.cont && !obj.ai.turn ){
@@ -224,6 +235,11 @@ const DOMFuncs = (function(){
 				* it will display a message for the winner in the div gameboard-bottom.
 				* It will check for three different patterns: Vertical, Horizontal, and Diagonal
 				* moves. It also will be invoked every time a player makes a move.
+				**/
+
+				/**
+				* TODO:
+				* - add support for ai.isActive.
 				**/
 
 	function _checkGame(obj){
@@ -391,10 +407,14 @@ const DOMFuncs = (function(){
 	function _invokeAI(){
 		/**
 		* Check what user has the turn property set to false.
+		* - isActive to true.
 		* - Assign the container number to aiContainer.
 		* - Store the name of the player that owns that container.
 		* - Assign the mark of that player to our ai.
 		**/
+
+		gameFlow.ai.isActive = true;
+
 		for(player in gameFlow.players){
 			if(!gameFlow.players[player].turn){
 				gameFlow.ai.cont.number = gameFlow.players[player].container;
@@ -403,17 +423,17 @@ const DOMFuncs = (function(){
 
 				playerSide = ( gameFlow.ai.cont.number == 0) ? "rightPlayer" : "leftPlayer";
 				opponent = { cont: gameFlow.players[playerSide].container, name: gameFlow.players[playerSide].name}
-				console.log("testing: ", opponent);
+
 			}
 		}
 
 		/**
 		* Display A.I in the previously assigned container.
-		*	- Assign "Artificial Intelligence" to the textContent of the designed container.
+		*	- Assign the AI name to the textContent of the designed container.
 		**/
 		for(node of usersDisplay){
 			if(node.id[ node.id.length - 1 ] == gameFlow.ai.cont.number){
-				node.textContent = "Artificial Intelligence";
+				node.textContent = gameFlow.ai.name;
 			}
 		}
 
@@ -714,9 +734,7 @@ const DOMFuncs = (function(){
 					_invokeAI();
 				}
 
-
 				triggeredOpt.classList.add("selected-opt");
-				gameFlow.ai.isActive = true;
 				gameFlow.ai.difficulty = [triggeredOpt.id][0].slice(4);
 			}
 

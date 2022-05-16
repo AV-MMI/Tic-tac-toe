@@ -240,32 +240,39 @@ const DOMFuncs = (function(){
 				**/
 
 	function _checkGame(obj){
+		/**
+		*	Auxiliar Function.
+		* In charge of running the require steps after the game is over.
+		**/
+
+		function endCheck(aiActive, dataToPass="Draw"){
+			if(!aiActive){
+				_pushDataToHistoryObj(dataToPass);
+				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
+				gameFlow.status = false;
+			}
+		}
+
 		let winner;
 		if(!gameFlow.ai.isActive){
 			//Vertical.
 			if(obj["0"] !== "" && obj["0"] == obj["1"] && obj["1"] == obj["2"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["0"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				_pushDataToHistoryObj(winner);
-				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
-				gameFlow.status = false;
+				endCheck(gameFlow.ai.isActive, winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
 
 			else if(obj["3"] !== "" && obj["3"] == obj["4"] && obj["4"] == obj["5"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["3"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				_pushDataToHistoryObj(winner);
-				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
-				gameFlow.status = false;
+				endCheck(gameFlow.ai.isActive, winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
 
 			else if(obj["6"] !== "" && obj["6"] == obj["7"] && obj["7"] == obj["8"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["6"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				_pushDataToHistoryObj(winner);
-				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
-				gameFlow.status = false;
+				endCheck(gameFlow.ai.isActive, winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
@@ -273,27 +280,21 @@ const DOMFuncs = (function(){
 			//Horizontal.
 			else if(obj["0"] !== "" && obj["0"] == obj["3"] && obj["3"] == obj["6"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["0"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				_pushDataToHistoryObj(winner);
-				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
-				gameFlow.status = false;
+				endCheck(gameFlow.ai.isActive, winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
 
 			else if(obj["1"] !== "" && obj["1"] == obj["4"] && obj["4"] == obj["7"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["1"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				_pushDataToHistoryObj(winner);340
-				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
-				gameFlow.status = false;
+				endCheck(gameFlow.ai.isActive, winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
 
 			else if(obj["2"] !== "" && obj["2"] == obj["5"] && obj["5"] == obj["8"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["2"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				_pushDataToHistoryObj(winner);
-				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
-				gameFlow.status = false;
+				endCheck(gameFlow.ai.isActive, winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
@@ -301,18 +302,14 @@ const DOMFuncs = (function(){
 			//Diagonal.
 			else if(obj["0"] !== "" && obj["0"] == obj["4"] && obj["4"] == obj["8"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["0"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				_pushDataToHistoryObj(winner);
-				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
-				gameFlow.status = false;
+				endCheck(gameFlow.ai.isActive, winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
 
 			else if(obj["2"] !== "" && obj["2"] == obj["4"] && obj["4"] == obj["6"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["2"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				_pushDataToHistoryObj(winner);
-				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
-				gameFlow.status = false;
+				endCheck(gameFlow.ai.isActive, winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
@@ -321,9 +318,7 @@ const DOMFuncs = (function(){
 			else if(obj["0"] !== "" && obj["3"] !== "" && obj["6"] !== ""
 				&& obj["1"] !== "" && obj["4"] !== "" && obj["7"] !== ""
 				&& obj["2"] !== "" && obj["5"] !== "" && obj["8"] !== "" && gameFlow.status){
-				_pushDataToHistoryObj("Draw");
-				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
-				gameFlow.status = false;
+				endCheck(gameFlow.ai.isActive);
 
 				_bottomDisplay(`It looks like there have been a draw`, true)
 			}
@@ -332,30 +327,8 @@ const DOMFuncs = (function(){
 			else{
 				_highlightPlayerTurn(gameFlow, gameFlow.ai.isActive);
 			}
-		} else { //aiStatus == true.
 			
-			function test(n){
-								//A.I won the game.
-				if(obj[`${n}`] == gameFlow.ai.mark){
-					_pushDataToHistoryObj(`A.I: ${gameFlow.ai.name}`);
-					_bottomDisplay(`You have lost against ${gameFlow.ai.name} :(`, true)
-				}
-				//Player won the game.
-				else {
-					let winnerPlayer;
-					for(player in gameFlow.players){
-						if(obj["0"] !== gameFlow.ai.mark){
-							winnerPlayer = gameFlow.players[player].name;
-						}
-					};
-
-					_pushDataToHistoryObj(winnerPlayer);
-					_bottomDisplay(`Congratulations, you have won :)`);
-				}
-
-				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
-				gameFlow.status = false;
-			};
+		} else { //aiStatus == true.
 
 			//Vertical.
 			if(obj["0"] !== "" && obj["0"] == obj["1"] && obj["1"] == obj["2"] && gameFlow.status){test(0)}

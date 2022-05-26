@@ -180,7 +180,7 @@ const DOMFuncs = (function(){
 				*	the current turn, remove the border.
 				**/
 
-	let opponent;
+	let opponent; // used by: _involeAi(), _highlightPlayerTurn(), _endCheck()
 	function _highlightPlayerTurn(obj, aiIsActive){
 		if(!aiIsActive){
 			for(node of usersDisplay){
@@ -245,12 +245,11 @@ const DOMFuncs = (function(){
 		* In charge of running the require steps after the game is over.
 		**/
 
-		function endCheck(aiActive, dataToPass="Draw"){
-			if(!aiActive){
+		function _endCheck(dataToPass)
 				_pushDataToHistoryObj(dataToPass);
 				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
 				gameFlow.status = false;
-			}
+
 		}
 
 		let winner;
@@ -258,21 +257,21 @@ const DOMFuncs = (function(){
 			//Vertical.
 			if(obj["0"] !== "" && obj["0"] == obj["1"] && obj["1"] == obj["2"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["0"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				endCheck(gameFlow.ai.isActive, winner);
+				_endCheck(winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
 
 			else if(obj["3"] !== "" && obj["3"] == obj["4"] && obj["4"] == obj["5"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["3"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				endCheck(gameFlow.ai.isActive, winner);
+				_endCheck(winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
 
 			else if(obj["6"] !== "" && obj["6"] == obj["7"] && obj["7"] == obj["8"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["6"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				endCheck(gameFlow.ai.isActive, winner);
+				_endCheck(winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
@@ -280,21 +279,21 @@ const DOMFuncs = (function(){
 			//Horizontal.
 			else if(obj["0"] !== "" && obj["0"] == obj["3"] && obj["3"] == obj["6"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["0"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				endCheck(gameFlow.ai.isActive, winner);
+				_endCheck(winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
 
 			else if(obj["1"] !== "" && obj["1"] == obj["4"] && obj["4"] == obj["7"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["1"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				endCheck(gameFlow.ai.isActive, winner);
+				_endCheck(winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
 
 			else if(obj["2"] !== "" && obj["2"] == obj["5"] && obj["5"] == obj["8"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["2"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				endCheck(gameFlow.ai.isActive, winner);
+				_endCheck(winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
@@ -302,14 +301,14 @@ const DOMFuncs = (function(){
 			//Diagonal.
 			else if(obj["0"] !== "" && obj["0"] == obj["4"] && obj["4"] == obj["8"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["0"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				endCheck(gameFlow.ai.isActive, winner);
+				_endCheck(winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
 
 			else if(obj["2"] !== "" && obj["2"] == obj["4"] && obj["4"] == obj["6"] && gameFlow.status){
 				winner = (gameFlow.players.leftPlayer.mark == obj["2"]) ? gameFlow.players.leftPlayer.name : gameFlow.players.rightPlayer.name;
-				endCheck(gameFlow.ai.isActive, winner);
+				_endCheck(winner);
 
 				_bottomDisplay(`Congratulations ${winner}, you have won this game!`, true);
 			}
@@ -318,7 +317,7 @@ const DOMFuncs = (function(){
 			else if(obj["0"] !== "" && obj["3"] !== "" && obj["6"] !== ""
 				&& obj["1"] !== "" && obj["4"] !== "" && obj["7"] !== ""
 				&& obj["2"] !== "" && obj["5"] !== "" && obj["8"] !== "" && gameFlow.status){
-				endCheck(gameFlow.ai.isActive);
+				_endCheck("Draw");
 
 				_bottomDisplay(`It looks like there have been a draw`, true)
 			}
@@ -327,30 +326,52 @@ const DOMFuncs = (function(){
 			else{
 				_highlightPlayerTurn(gameFlow, gameFlow.ai.isActive);
 			}
-			
+
 		} else { //aiStatus == true.
 
 			//Vertical.
-			if(obj["0"] !== "" && obj["0"] == obj["1"] && obj["1"] == obj["2"] && gameFlow.status){test(0)}
-			else if(obj["3"] !== "" && obj["3"] == obj["4"] && obj["4"] == obj["5"] && gameFlow.status){test(3)}
-			else if(obj["6"] !== "" && obj["6"] == obj["7"] && obj["7"] == obj["8"] && gameFlow.status){test(6)}
+			if(obj["0"] !== "" && obj["0"] == obj["1"] && obj["1"] == obj["2"] && gameFlow.status){
+				winner =;
+				_endCheck(winner)
+			}
+			else if(obj["3"] !== "" && obj["3"] == obj["4"] && obj["4"] == obj["5"] && gameFlow.status){
+				winner =;
+				_endCheck(winner)
+			}
+			else if(obj["6"] !== "" && obj["6"] == obj["7"] && obj["7"] == obj["8"] && gameFlow.status){
+				winner =;
+				_endCheck(winner)
+			}
 
 			//Horizontal.
-			else if(obj["0"] !== "" && obj["0"] == obj["3"] && obj["3"] == obj["6"] && gameFlow.status){test(0)}
-			else if(obj["1"] !== "" && obj["1"] == obj["4"] && obj["4"] == obj["7"] && gameFlow.status){test(1)}
-			else if(obj["2"] !== "" && obj["2"] == obj["5"] && obj["5"] == obj["8"] && gameFlow.status){test(2)}
+			else if(obj["0"] !== "" && obj["0"] == obj["3"] && obj["3"] == obj["6"] && gameFlow.status){
+				winner =;
+				_endCheck(winner)
+			}
+			else if(obj["1"] !== "" && obj["1"] == obj["4"] && obj["4"] == obj["7"] && gameFlow.status){
+				winner =;
+				_endCheck(winner)
+			}
+			else if(obj["2"] !== "" && obj["2"] == obj["5"] && obj["5"] == obj["8"] && gameFlow.status){
+				winner =;
+				_endCheck(winner)
+			}
 
 			//Diagonal.
-			else if(obj["0"] !== "" && obj["0"] == obj["4"] && obj["4"] == obj["8"] && gameFlow.status){test(0)}
-			else if(obj["6"] !== "" && obj["6"] == obj["4"] && obj["4"] == obj["2"] && gameFlow.status){test(6)}
+			else if(obj["0"] !== "" && obj["0"] == obj["4"] && obj["4"] == obj["8"] && gameFlow.status){
+				winner =;
+				_endCheck(winner)
+			}
+			else if(obj["6"] !== "" && obj["6"] == obj["4"] && obj["4"] == obj["2"] && gameFlow.status){
+				winner =;
+				_endCheck(winner)
+			}
 
 			//Draw.
 			else if(obj["0"] !== "" && obj["3"] !== "" && obj["6"] !== ""
 				&& obj["1"] !== "" && obj["4"] !== "" && obj["7"] !== ""
 				&& obj["2"] !== "" && obj["5"] !== "" && obj["8"] !== "" && gameFlow.status){
-				_pushDataToHistoryObj("Draw");
-				_createHistoryItems(gameFlow.history, local.utils.history.dataId - 1, ulHistoryContent);
-				gameFlow.status = false;
+				_endCheck("Draw")
 
 				_bottomDisplay(`It looks like there have been a draw`, true);
 			}
@@ -445,7 +466,7 @@ const DOMFuncs = (function(){
 				gameFlow.ai.mark = gameFlow.players[player].mark;
 
 				playerSide = ( gameFlow.ai.cont.number == 0) ? "rightPlayer" : "leftPlayer";
-				opponent = { cont: gameFlow.players[playerSide].container, name: gameFlow.players[playerSide].name}
+				opponent = { cont: gameFlow.players[playerSide].container, name: gameFlow.players[playerSide].name, side: playerSide};
 
 			}
 		}

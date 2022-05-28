@@ -520,6 +520,48 @@ const DOMFuncs = (function(){
 
 	}
 
+		// --v-- Shared by the three levels of difficulty.
+	function _obtainFreeSquares(){
+		let arr = [];
+
+		for(square in gameFlow.board){
+			if(gameFlow.board[square] == ""){
+				arr.push(square);
+			}
+		}
+
+		return arr;
+	}
+
+	function _markAiSquare(square){
+		for(square of squares){
+			if(square.id[square.id.length - 1] == square){
+				squares[square].click();
+			}
+		}
+	}
+		// --^-- Shared by the three levels of difficulty
+
+				// Difficulty: Easy
+
+	function _randomSquareGenerator(max){
+
+		function randomInt(max){
+			return Math.floor(Math.random() * max);
+		}
+
+		let rNum = randomInt(_obtainFreeSquares().length-1);
+		return squares[rNum];
+
+	}
+
+	function _easyDifficulty(){
+		let squareEl = _randomSquareGenerator( _obtainFreeSquares );
+		squareEl.click();
+	}
+
+
+
 	//---Public Methods and Variables---.
 		/*How to Play button*/
 
@@ -852,6 +894,9 @@ const DOMFuncs = (function(){
 		openAIMenu, //function
 		difficultyOpts, //nodelist
 		selectedOpt, //event handler
+		_obtainFreeSquares, //testing
+		_markAiSquare, //testing
+		_randomSquareGenerator, //testing
 	}
 
 })();
@@ -864,6 +909,9 @@ DOMFuncs._pushDataToHistoryObj();
 DOMFuncs._pushDataToHistoryObj();
 DOMFuncs._pushDataToHistoryObj();
 DOMFuncs.displayBoard(gameFlow.board);
+console.log(DOMFuncs._obtainFreeSquares());
+//DOMFuncs._markAiSquare(2);
+DOMFuncs._randomSquareGenerator();
 
 /*^________TESTING_________^*/
 

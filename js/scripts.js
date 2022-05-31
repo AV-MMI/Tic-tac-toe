@@ -400,7 +400,7 @@ const DOMFuncs = (function(){
 			}
 			else {
 				_highlightPlayerTurn(gameFlow, gameFlow.ai.isActive);
-				_aiMove();
+				setTimeout(() => { _aiMove() }, 1000);
 			}
 		}
 
@@ -528,9 +528,9 @@ const DOMFuncs = (function(){
 	function _aiMove(){
 		if(gameFlow.status && gameFlow.ai.turn){
 			if(gameFlow.ai.difficulty == "easy"){
-				let intervalID = setInterval(_easyDifficulty(), 500);
-				--Working--
+				_easyDifficulty();
 			}
+
 		}
 	}
 

@@ -523,7 +523,10 @@ const DOMFuncs = (function(){
 
 	}
 				/**
-				*
+				* Function.
+				* In charge of detecting the level of difficulty currently selected
+				* and in base to that return the corresponding function to make the move
+				* once is the turn to our AI.
 				**/
 	function _aiMove(){
 		if(gameFlow.status && gameFlow.ai.turn){
@@ -532,6 +535,106 @@ const DOMFuncs = (function(){
 			}
 
 		}
+	}
+
+				/**
+				* Function.
+				* Evaluator Function. Evaluates the board and in base to that board returns
+				* a value of 10. whether if is negative or positive will depend on who has
+				* the upper hand in the given board. AI will always be the minimizer player.
+				**/
+	function _boardEval(board){
+		// vertical
+		if (board[0] == board[3] && board[3] == board[6]) {
+			if (board[0] == gameFlow.ai.opponent.mark) {
+				return +10;
+			} else {
+				return -10;
+			}
+		}
+		else if (board[1] == board[4] && board[4] == board[7]) {
+			if (board[1] == gameFlow.ai.opponent.mark) {
+				return +10;
+			} else {
+				return -10;
+			}
+		}
+		else if (board[2] == board[5] && board[5] == board[8]) {
+			if (board[2] == gameFlow.ai.opponent.mark) {
+				return +10;
+			} else {
+				return -10;
+			}
+		}
+
+		// horizontal
+		else if (board[0] == board[1] && board[1] == board[2]) {
+			if (board[0] == gameFlow.ai.opponent.mark) {
+				return +10;
+			} else {
+				return -10;
+			}
+		}
+		else if (board[3] == board[4] && board[4] == board[5]) {
+			if (board[3] == gameFlow.ai.opponent.mark) {
+				return +10;
+			} else {
+				return -10;
+			}
+		}
+		else if (board[6] == board[7] && board[7] == board[8]) {
+			if (board[6] == gameFlow.ai.opponent.mark) {
+				return +10;
+			} else {
+				return -10;
+			}
+		}
+
+		// diagonal
+		else if (board[0] == board[4] && board[4] == board[8]) {
+			if (board[0] == gameFlow.ai.opponent.mark) {
+				return +10;
+			} else {
+				return -10;
+			}
+		}
+		else if (board[2] == board[4] && board[4] == board[6]) {
+			if (board[2] == gameFlow.ai.opponent.mark) {
+				return +10;
+			} else {
+				return -10;
+			}
+		}
+		//Draw
+		else {
+			return 0;
+		}
+	}
+
+				/**
+				* Function.
+				* Takes the current state of the board and in base to that
+				* generates possibles boards until it reach a terminal state.
+				**/
+	function _boardGenerator(board){
+		let tempBoard = {};
+		Object.assign(tempBoard, board);
+
+		let tempControl = {
+			'ai': {
+				'mark': gameFlow.ai.mark,
+				'turn': gameFlow.ai.turn,
+			},
+			'player': {
+				'mark': gameFlow.ai.opponent.mark,
+				'turn': (gameFlow.ai.turn) ? false : true,
+			}
+		}
+
+
+		let initialMove;
+		let emptySquares = _obtainFreeSquares();
+
 	}
 
 		// --v-- Shared by the three levels of difficulty.
@@ -909,6 +1012,7 @@ const DOMFuncs = (function(){
 		selectedOpt, //event handler
 		_obtainFreeSquares, //testing
 		_markAiSquare, //testing
+		_boardGenerator, //testing
 	}
 
 })();

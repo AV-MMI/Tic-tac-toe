@@ -613,6 +613,14 @@ const DOMFuncs = (function(){
 
 				/**
 				* Function.
+				* Toggle turn. Auxiliary function for _boardGenerator().
+				**/
+	function _toggleTurn(){
+		//--working--
+	}
+
+				/**
+				* Function.
 				* Takes the current state of the board and in base to that
 				* generates possibles boards until it reach a terminal state.
 				**/
@@ -631,9 +639,26 @@ const DOMFuncs = (function(){
 			}
 		}
 
-
 		let initialMove;
 		let emptySquares = _obtainFreeSquares();
+
+		for(let i = 0; i < emptySquares.length; i++){
+			let completeBoard = false;
+
+			while(!completeBoard){
+
+				// terminating condition: a Complete board is reached.
+				if(tempBoard[0] !== "" && tempBoard[3] !== "" && tempBoard[6] !== "" &&
+					 tempBoard[1] !== "" && tempBoard[4] !== "" && tempBoard[7] !== "" &&
+					 tempBoard[2] !== "" && tempBoard[5] !== "" && tempBoard[8] !== ""){
+					completeBoard = true;
+				}
+				else {
+
+				}
+
+			}
+		}
 
 	}
 

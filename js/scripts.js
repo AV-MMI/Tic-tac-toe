@@ -615,9 +615,19 @@ const DOMFuncs = (function(){
 				* Function.
 				* Toggle turn. Auxiliary function for _boardGenerator().
 				**/
-	function _toggleTurn(){
-		//--working--
+	function _toggleTurn(obj){
+		if(obj.ai.turn){
+			obj.player.turn = true;
+			obj.ai.turn = false;
+		}
+
+		else {
+			obj.ai.turn = true;
+			obj.player.turn = false;
+		}
 	}
+
+	const _possibleBoards = [];
 
 				/**
 				* Function.
@@ -641,25 +651,22 @@ const DOMFuncs = (function(){
 
 		let initialMove;
 		let emptySquares = _obtainFreeSquares();
-
+		let count = 0;
+		console.log("test")
 		for(let i = 0; i < emptySquares.length; i++){
 			let completeBoard = false;
+			initialMove = emptySquares[i];
 
-			while(!completeBoard){
+			tempBoard[initialMove] = (tempControl.ai.turn) ? tempControl.ai.mark : tempControl.player.mark;
+			_toggleTurn(tempControl);
 
-				// terminating condition: a Complete board is reached.
-				if(tempBoard[0] !== "" && tempBoard[3] !== "" && tempBoard[6] !== "" &&
-					 tempBoard[1] !== "" && tempBoard[4] !== "" && tempBoard[7] !== "" &&
-					 tempBoard[2] !== "" && tempBoard[5] !== "" && tempBoard[8] !== ""){
-					completeBoard = true;
-				}
-				else {
+			// working here. -o-
 
-				}
+			_possibleBoards.push([tempBoard, initialMove]);
 
-			}
 		}
 
+		return _possibleBoards;
 	}
 
 		// --v-- Shared by the three levels of difficulty.
@@ -927,8 +934,8 @@ const DOMFuncs = (function(){
 
 			gameboardBoard.style.borderLeft = "2px solid black";
 			gameboardBoard.style.borderRight = "2px solid black";
-			gameboardBoard.style.borderTop = "2px solid black";
-			gameboardBoard.style.borderBottom = "2px solid black";
+			gameboardBoard.style.borderTop = "none";
+			gameboardBoard.style.borderBottom = "none";
 
 			// If the div tag was pressed, find the span child and put the mark inside it.
 			if(squareData[1] == "D"){

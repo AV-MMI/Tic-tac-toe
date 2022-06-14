@@ -629,6 +629,41 @@ const DOMFuncs = (function(){
 
 	const _possibleBoards = [];
 
+
+	/**
+	* Testing code.
+
+let board = {
+	0: "",
+	1: "",
+	2: "",
+	3: "",
+	4: "",
+	5: "",
+	6: "",
+	7: "",
+	8: "",
+}
+
+const possibleBoards = [];
+
+function generateBoard(board){
+	let tempBoard = {};
+
+	for(square in board){
+		Object.assign(tempBoard, board);
+		tempBoard[square] = "A";
+		possibleBoards.push(tempBoard);
+
+	}
+}
+
+generateBoard(board);
+
+console.log(possibleBoards);
+
+
+	**/
 				/**
 				* Function.
 				* Takes the current state of the board and in base to that
@@ -636,7 +671,6 @@ const DOMFuncs = (function(){
 				**/
 	function _boardGenerator(board){
 		let tempBoard = {};
-		Object.assign(tempBoard, board);
 
 		let tempControl = {
 			'ai': {
@@ -651,18 +685,18 @@ const DOMFuncs = (function(){
 
 		let initialMove;
 		let emptySquares = _obtainFreeSquares();
-		let count = 0;
-		console.log("test")
+		let completeBoard = true;
+
 		for(let i = 0; i < emptySquares.length; i++){
-			let completeBoard = false;
+			Object.assign(tempBoard, board);
 			initialMove = emptySquares[i];
 
 			tempBoard[initialMove] = (tempControl.ai.turn) ? tempControl.ai.mark : tempControl.player.mark;
 			_toggleTurn(tempControl);
 
-			// working here. -o-
-
+			console.log(tempBoard, 1, initialMove);
 			_possibleBoards.push([tempBoard, initialMove]);
+			console.log(_possibleBoards);
 
 		}
 

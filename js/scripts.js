@@ -629,41 +629,6 @@ const DOMFuncs = (function(){
 
 	const _possibleBoards = [];
 
-
-	/**
-	* Testing code.
-
-let board = {
-	0: "",
-	1: "",
-	2: "",
-	3: "",
-	4: "",
-	5: "",
-	6: "",
-	7: "",
-	8: "",
-}
-
-const possibleBoards = [];
-
-function generateBoard(board){
-	let tempBoard = {};
-
-	for(square in board){
-		Object.assign(tempBoard, board);
-		tempBoard[square] = "A";
-		possibleBoards.push(tempBoard);
-
-	}
-}
-
-generateBoard(board);
-
-console.log(possibleBoards);
-
-
-	**/
 				/**
 				* Function.
 				* Takes the current state of the board and in base to that
@@ -671,8 +636,9 @@ console.log(possibleBoards);
 				**/
 	function _boardGenerator(board){
 		let tempBoard = {};
+		let tempControl = {};
 
-		let tempControl = {
+		let control = {
 			'ai': {
 				'mark': gameFlow.ai.mark,
 				'turn': gameFlow.ai.turn,
@@ -689,15 +655,23 @@ console.log(possibleBoards);
 
 		for(let i = 0; i < emptySquares.length; i++){
 			Object.assign(tempBoard, board);
+			Object.assign(tempControl, control);
+
 			initialMove = emptySquares[i];
 
-			tempBoard[initialMove] = (tempControl.ai.turn) ? tempControl.ai.mark : tempControl.player.mark;
-			_toggleTurn(tempControl);
+			tempBoard[initialMove] = (control.ai.turn) ? control.ai.mark : control.player.mark;
+			
+			/**for(let j = 0; j <= emptySquares.length; j++){
+				if(tempBoard[j] == ""){
+					tempBoard[j] = (tempControl.ai.turn) ? tempControl.ai.mark : tempControl.player.mark;
+				}
 
-			console.log(tempBoard, 1, initialMove);
+				_toggleTurn(tempControl);
+			}**/
+
 			_possibleBoards.push([tempBoard, initialMove]);
-			console.log(_possibleBoards);
-
+			tempBoard = {};
+			tempControl = {};
 		}
 
 		return _possibleBoards;

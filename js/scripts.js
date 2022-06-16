@@ -626,9 +626,6 @@ const DOMFuncs = (function(){
 			obj.player.turn = false;
 		}
 	}
-
-	const _possibleBoards = [];
-
 				/**
 				* Function.
 				* Takes the current state of the board and in base to that
